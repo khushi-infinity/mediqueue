@@ -1,0 +1,10 @@
+Captured at 2026-10-15T13:44:57.515775+00:00
+Command: git log -15 --format=%h %s
+Exit code: 0
+
+113e526 fix(gitops): make the local overlay authoritative over the promoted release
+f2ce635 fix(helm): make the migration Job wait for PostgreSQL
+24c4dc9 feat(devops): add Compose stack, Helm chart, Terraform, CI and automation scripts
+9205062 feat(ui): add MediQueue clinic front-desk dashboard
+09a668d feat(api): add MediQueue FastAPI backend with doctors, appointments and metrics
+

@@ -1,0 +1,16 @@
+{
+  "name": "kubernetes",
+  "capturedAt": "2026-10-15T13:44:54.563084+00:00",
+  "command": [
+    "kubectl",
+    "--context",
+    "kind-mediqueue",
+    "-n",
+    "mediqueue",
+    "get",
+    "pods,svc,ingress,hpa"
+  ],
+  "exitCode": 0,
+  "stdout": "NAME                             READY   STATUS    RESTARTS      AGE\npod/backend-dfcd54b6d-f8svx      1/1     Running   1 (40m ago)   80m\npod/backend-dfcd54b6d-fdcmt      1/1     Running   1 (40m ago)   72m\npod/frontend-784fb8c85-c5dxh     1/1     Running   3 (40m ago)   80m\npod/frontend-784fb8c85-s4p48     1/1     Running   3 (40m ago)   80m\npod/grafana-69b54f78d7-nfzvk     1/1     Running   1 (40m ago)   80m\npod/postgres-0                   1/1     Running   1 (40m ago)   80m\npod/prometheus-dfbc7cbf4-7d7zx   1/1     Running   1 (40m ago)   80m\n\nNAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE\nservice/backend           ClusterIP   10.96.205.163   <none>        8000/TCP         80m\nservice/backend-metrics   ClusterIP   None            <none>        8000/TCP         80m\nservice/frontend          ClusterIP   10.96.15.85     <none>        8080/TCP         80m\nservice/grafana           NodePort    10.96.245.109   <none>        3000:30300/TCP   80m\nservice/postgres          ClusterIP   None            <none>        5432/TCP         80m\nservice/prometheus        NodePort    10.96.235.195   <none>        9090:30900/TCP   80m\n\nNAME                                  CLASS     HOSTS                 ADDRESS     PORTS   AGE\ningress.networking.k8s.io/mediqueue   traefik   mediqueue.localhost   127.0.0.1   80      80m\n\nNAME                                          REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE\nhorizontalpodautoscaler.autoscaling/backend   Deployment/backend   cpu: 6%/70%   2         4         2          80m\n",
+  "stderr": ""
+}

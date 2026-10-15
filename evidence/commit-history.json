@@ -1,0 +1,13 @@
+{
+  "name": "commit-history",
+  "capturedAt": "2026-10-15T13:44:57.515775+00:00",
+  "command": [
+    "git",
+    "log",
+    "-15",
+    "--format=%h %s"
+  ],
+  "exitCode": 0,
+  "stdout": "113e526 fix(gitops): make the local overlay authoritative over the promoted release\nf2ce635 fix(helm): make the migration Job wait for PostgreSQL\n24c4dc9 feat(devops): add Compose stack, Helm chart, Terraform, CI and automation scripts\n9205062 feat(ui): add MediQueue clinic front-desk dashboard\n09a668d feat(api): add MediQueue FastAPI backend with doctors, appointments and metrics\n",
+  "stderr": ""
+}

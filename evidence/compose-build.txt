@@ -1,0 +1,160 @@
+Captured at 2026-10-15T13:44:42.073970+00:00
+Command: docker compose up --build -d
+Exit code: 0
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.08kB done
+#1 DONE 0.0s
+
+#2 [frontend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 412B done
+#2 DONE 0.0s
+
+#3 [backend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 668B done
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/node:24-alpine
+#4 ...
+
+#5 [auth] library/node:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [auth] library/python:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#7 [auth] nginxinc/nginx-unprivileged:pull token for registry-1.docker.io
+#7 DONE 0.0s
+
+#8 [frontend internal] load metadata for docker.io/nginxinc/nginx-unprivileged:stable-alpine
+#8 ...
+
+#4 [frontend internal] load metadata for docker.io/library/node:24-alpine
+#4 DONE 1.6s
+
+#9 [backend internal] load metadata for docker.io/library/python:3.13-alpine
+#9 ...
+
+#8 [frontend internal] load metadata for docker.io/nginxinc/nginx-unprivileged:stable-alpine
+#8 DONE 2.0s
+
+#9 [backend internal] load metadata for docker.io/library/python:3.13-alpine
+#9 DONE 2.0s
+
+#10 [frontend internal] load .dockerignore
+#10 transferring context: 82B 0.0s done
+#10 DONE 0.0s
+
+#11 [backend internal] load .dockerignore
+#11 transferring context: 99B done
+#11 DONE 0.0s
+
+#12 [backend internal] load build context
+#12 transferring context: 763B 0.0s done
+#12 DONE 0.0s
+
+#13 [frontend build 1/6] FROM docker.io/library/node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f
+#13 resolve docker.io/library/node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f 0.0s done
+#13 DONE 0.0s
+
+#14 [backend 1/7] FROM docker.io/library/python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a
+#14 resolve docker.io/library/python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a 0.0s done
+#14 DONE 0.0s
+
+#15 [frontend stage-1 1/3] FROM docker.io/nginxinc/nginx-unprivileged:stable-alpine@sha256:782bb89768cc87b7f95c18b95baa1af250e5d451f26794f59363540161147c01
+#15 resolve docker.io/nginxinc/nginx-unprivileged:stable-alpine@sha256:782bb89768cc87b7f95c18b95baa1af250e5d451f26794f59363540161147c01 0.0s done
+#15 DONE 0.0s
+
+#16 [frontend internal] load build context
+#16 transferring context: 381B 0.0s done
+#16 DONE 0.0s
+
+#17 [backend 3/7] COPY requirements.txt .
+#17 CACHED
+
+#18 [backend 2/7] WORKDIR /app
+#18 CACHED
+
+#19 [backend 5/7] COPY --chown=10001:10001 app ./app
+#19 CACHED
+
+#20 [backend 4/7] RUN apk upgrade --no-cache     && pip install --no-cache-dir -r requirements.txt     && pip uninstall --yes pip     && adduser -D -u 10001 app
+#20 CACHED
+
+#21 [backend 6/7] COPY --chown=10001:10001 alembic ./alembic
+#21 CACHED
+
+#22 [backend 7/7] COPY --chown=10001:10001 alembic.ini .
+#22 CACHED
+
+#23 [frontend build 6/6] RUN npm run build
+#23 CACHED
+
+#24 [frontend build 2/6] WORKDIR /app
+#24 CACHED
+
+#25 [frontend stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#25 CACHED
+
+#26 [frontend build 3/6] COPY package*.json ./
+#26 CACHED
+
+#27 [frontend build 5/6] COPY . .
+#27 CACHED
+
+#28 [frontend build 4/6] RUN npm ci
+#28 CACHED
+
+#29 [frontend stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#29 CACHED
+
+#30 [frontend] exporting to image
+#30 exporting layers done
+#30 exporting manifest sha256:1dbb62a12c1524ee1283fbe0067c038f4aeea6139e0a8f167c5c0cfa2d448c06 0.0s done
+#30 exporting config sha256:03577aed2a37f827cbfc3c21ca129e472437a57670fbc73eec21faf8267e3037 done
+#30 exporting attestation manifest sha256:db01830ef79a007cf0e3d6f9c03e67bb49bf720164b83cb781bc0ec45c04018a 0.0s done
+#30 exporting manifest list sha256:331f2f57f300323f8ecdbdcfaea054ecc28ac738a758ab0be6d05cb817122633 done
+#30 naming to docker.io/library/mediqueue-frontend:local
+#30 naming to docker.io/library/mediqueue-frontend:local done
+#30 unpacking to docker.io/library/mediqueue-frontend:local done
+#30 DONE 0.1s
+
+#31 [backend] exporting to image
+#31 exporting layers done
+#31 exporting manifest sha256:f6bdbfa3c01951145c8cd5042c1060ed75e2164425df1c1b753a07f53f3b742a done
+#31 exporting config sha256:c320d7c45482c4682f5d4303cf20646ae5e7e9544f24137cd9607ef20d895deb 0.0s done
+#31 exporting attestation manifest sha256:d2291e541e8263f38544d863c87e75a3517ce9fade614b3bfa6158602114736f 0.0s done
+#31 exporting manifest list sha256:a8a3ead9cbdc44637fdfcc526f5716f7db614e0e6eae5a4de72a971751f50a64 0.0s done
+#31 naming to docker.io/library/mediqueue-backend:local done
+#31 unpacking to docker.io/library/mediqueue-backend:local done
+#31 DONE 0.1s
+
+#32 [backend] resolving provenance for metadata file
+#32 DONE 0.0s
+
+#33 [frontend] resolving provenance for metadata file
+#33 DONE 0.0s
+
+ Image mediqueue-backend:local Building 
+ Image mediqueue-frontend:local Building 
+ Image mediqueue-backend:local Built 
+ Image mediqueue-frontend:local Built 
+ Container mediqueue-postgres-1 Running 
+ Container mediqueue-migrate-1 Recreate 
+ Container mediqueue-migrate-1 Recreated 
+ Container mediqueue-backend-1 Recreate 
+ Container mediqueue-backend-1 Recreated 
+ Container mediqueue-frontend-1 Recreate 
+ Container mediqueue-frontend-1 Recreated 
+ Container mediqueue-postgres-1 Waiting 
+ Container mediqueue-postgres-1 Healthy 
+ Container mediqueue-migrate-1 Starting 
+ Container mediqueue-migrate-1 Started 
+ Container mediqueue-migrate-1 Waiting 
+ Container mediqueue-migrate-1 Exited 
+ Container mediqueue-backend-1 Starting 
+ Container mediqueue-backend-1 Started 
+ Container mediqueue-backend-1 Waiting 
+ Container mediqueue-backend-1 Healthy 
+ Container mediqueue-frontend-1 Starting 
+ Container mediqueue-frontend-1 Started 
