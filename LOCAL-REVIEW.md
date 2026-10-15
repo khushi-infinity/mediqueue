@@ -17,6 +17,15 @@ found and fixed, and what remains unproven.
 | Chart lint | `helm lint helm/mediqueue` | 0 failed |
 | Chart render | `helm template` | 16 objects, valid YAML |
 | Terraform | `fmt -check`, `init -backend=false`, `validate` | Format clean, configuration valid |
+| Kind cluster | `bash scripts/local-k8s.sh` | 8 pods Running, migration Job Complete |
+| Ingress routing | `curl -H 'Host: mediqueue.localhost'` | `/` and `/api` both 200 |
+| Prometheus | `/api/v1/targets` | Both backend replicas `up` |
+| Load test | `python3 scripts/load.py --seconds 40` | 2649 requests, 0 failures |
+| Autoscaling | `kubectl get hpa` after the load test | Backend scaled 2 → 3, then back to 2 |
+| Grafana | `/api/health`, dashboard search | 11.6.0 healthy, dashboard provisioned |
+| Failure lab | `python3 scripts/troubleshooting-check.py` | Diagnosed, repaired, cleaned up |
+| GitOps | `bash scripts/local-gitops.sh` | Application `Synced` + `Healthy` |
+| Terminal screenshots | `node scripts/render-evidence.mjs` | 12 PNGs rendered from the transcripts |
 | Slide deck | `.venv/bin/python scripts/build-slides.py` | 17-page PDF written |
 
 ## Defects Found And Fixed During This Review
@@ -47,6 +56,22 @@ found and fixed, and what remains unproven.
 8. **Two `subprocess.run` calls without an explicit `check`.** Ruff's `PLW1510`
    flagged them; they now pass `check=False` explicitly, which is the intent
    (the exit code is captured, not raised).
+9. **The migration Job raced PostgreSQL on a fresh cluster.** A headless Service
+   has no DNS record until its pod is ready, so on first install the Alembic Job
+   failed with a name-resolution error and burned its retries while the database
+   image was still being pulled. It now has a `pg_isready` init container, and
+   both bootstrap scripts preload the database image.
+10. **The GitOps overlay order defeated itself.** `Application` passed
+    `[values-local.yaml, values-release.json]`, and because later Helm value
+    files win, the promoted `ghcr.io/...` repository overrode the locally loaded
+    image name. Argo CD rendered an unpullable image, the sync-hook Job sat in
+    `ImagePullBackOff`, and the sync never completed. Rendering both orders side
+    by side proved the cause; the overlay is now applied last and pins both the
+    repository and the tag.
+11. **A stuck Argo CD operation blocks all later syncs.** After deleting the
+    wedged hook Job, the Application kept waiting on it; changing the spec could
+    not start a new operation. Clearing `status.operationState` released it. Worth
+    knowing before you spend ten minutes staring at `OutOfSync`.
 
 ## Claims That Are Not Verified Here
 
@@ -58,10 +83,14 @@ Stated plainly, because an unevidenced claim is worse than a missing one:
 - **AWS is not deployed.** Terraform is formatted and validated only. No plan,
   apply or destroy output from a real account exists, so no VPC or EKS console
   screenshots are present.
-- **HPA scale-out is configured, not observed.** Light local traffic does not
-  reach the CPU threshold. The manifest is not evidence of scaling.
-- **Argo CD is a local demonstration.** It reconciles the chart from this
-  repository on a Kind cluster; it is not a production GitOps pipeline.
+- **Argo CD is verified locally, not in production.** It reconciled this chart
+  from a local mirror of the repository on a Kind cluster and reached
+  `Synced`/`Healthy`. Because the GitHub repository is not pushed yet, the local
+  run used a mirror via `ARGO_REPO_URL`; the committed Application still points
+  at GitHub and has never synced from it.
+- **The autoscaler was observed scaling up and back down, but not under
+  production load.** Two replicas became three at 55% CPU and returned to two.
+  That is a real observation on a single node, not a capacity claim.
 - **No authentication or authorisation exists.** The API is open. It is safe for
   a loopback classroom demo and nothing else.
 - **The Trivy gate has never been exercised in CI.** It is configured with
@@ -69,6 +98,16 @@ Stated plainly, because an unevidenced claim is worse than a missing one:
   captured result.
 - **The demo video does not exist.** M10 requires one, and it must be recorded by
   the author. The slide deck is not a substitute.
+
+## An Environment Incident Worth Recording
+
+Mid-review the macOS volume reached 99% full (6.5 GB free) and Docker Desktop's
+VM filesystem turned read-only, which took down the Kind cluster's API server.
+No project defect was involved, and no project data was lost: the PostgreSQL
+volume and the Kind node both survived a Docker restart. Reclaiming the npm cache
+(18 GB of regenerable package data) restored 24 GB. The lesson is the ordinary
+one — a container demo needs free disk, and a read-only error from the Docker
+daemon is a host problem, not a manifest problem.
 
 ## How To Re-Run This Review
 
