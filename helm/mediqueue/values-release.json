@@ -1,11 +1,11 @@
 {
   "backend": {
     "repository": "ghcr.io/khushi-infinity/mediqueue-backend",
-    "tag": "d9984f13c3ec19acf3acfb3b53c414981a6e4e58"
+    "tag": "05fc4928cccfea79b3315a2caa5fd8b306a11c7b"
   },
   "frontend": {
     "repository": "ghcr.io/khushi-infinity/mediqueue-frontend",
-    "tag": "d9984f13c3ec19acf3acfb3b53c414981a6e4e58"
+    "tag": "05fc4928cccfea79b3315a2caa5fd8b306a11c7b"
   },
   "imagePullSecrets": []
 }
