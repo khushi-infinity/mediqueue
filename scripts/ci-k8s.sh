@@ -7,6 +7,7 @@ backend="ghcr.io/$owner/mediqueue-backend:$IMAGE_TAG"
 frontend="ghcr.io/$owner/mediqueue-frontend:$IMAGE_TAG"
 
 kind load docker-image "$backend" "$frontend" --name mediqueue-ci
+kind load docker-image postgres:17-alpine --name mediqueue-ci || true
 kubectl apply -f k8s/namespace.yaml
 
 password="$(openssl rand -hex 20)"

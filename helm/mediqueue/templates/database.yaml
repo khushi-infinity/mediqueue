@@ -99,6 +99,22 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+      initContainers:
+        # A headless Service has no DNS record until its pod is ready, so the
+        # migration must wait instead of racing PostgreSQL on a fresh install.
+        - name: wait-for-postgres
+          image: {{ .Values.database.image }}
+          command: [sh, -c]
+          args:
+            - "until pg_isready -h postgres -U mediqueue -d mediqueue; do echo 'waiting for postgres'; sleep 3; done"
+          securityContext:
+            runAsUser: 70
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 200m, memory: 128Mi}
       containers:
         - name: migrate
           image: "{{ .Values.backend.repository }}:{{ .Values.backend.tag }}"

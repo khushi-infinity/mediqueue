@@ -19,7 +19,10 @@ fi
 
 docker build -t mediqueue-backend:local backend
 docker build -t mediqueue-frontend:local frontend
+docker pull postgres:17-alpine
 kind load docker-image mediqueue-backend:local mediqueue-frontend:local --name mediqueue
+# Preload the database image so the migration Job does not race a slow first pull.
+kind load docker-image postgres:17-alpine --name mediqueue || true
 
 password="$(openssl rand -hex 20)"
 kubectl --context "$context" -n mediqueue create secret generic mediqueue-db \

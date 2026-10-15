@@ -13,7 +13,7 @@ transcript: list[str] = []
 
 def run(*args: str, timeout: int = 180) -> str:
     result = subprocess.run(
-        [*kubectl, *args], cwd=root, capture_output=True, text=True,
+        [*kubectl, *args], cwd=root, check=False, capture_output=True, text=True,
         encoding="utf-8", errors="replace", timeout=timeout,
     )
     block = f"$ kubectl {' '.join(args)}\n{result.stdout}{result.stderr}"

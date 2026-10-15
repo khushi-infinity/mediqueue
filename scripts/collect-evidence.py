@@ -32,7 +32,7 @@ if "--compose-build" in sys.argv:
 for name, command, cwd in checks:
     captured = datetime.now(UTC).isoformat()
     result = subprocess.run(
-        command, cwd=cwd, capture_output=True, text=True, encoding="utf-8",
+        command, cwd=cwd, check=False, capture_output=True, text=True, encoding="utf-8",
         errors="replace", timeout=900 if name == "compose-build" else 180,
     )
     record = {
