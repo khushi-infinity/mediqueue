@@ -14,11 +14,12 @@ the architecture taught in the course.
 **Start here:** [Submission status](SUBMISSION.md) | [Local quality review](LOCAL-REVIEW.md) | [Demo guide](demo/WALKTHROUGH.md) | [AWS deployment](terraform/README.md) | [Troubleshooting](troubleshooting/README.md)
 
 **Verified locally:** 26 API tests, Ruff clean, a healthy Docker Compose stack,
-a Kind cluster with 8 running pods and a completed migration Job, Prometheus
-scraping both backend replicas, the provisioned Grafana dashboard, 17 passing
-browser checks against both Compose and Kubernetes, Helm lint and a 16-object
-render, and a valid Terraform module tree. See
-[evidence](evidence/README.md) for the raw transcripts and screenshots.
+a Kind cluster with all pods running and a completed migration Job, Prometheus
+scraping every backend replica, the provisioned Grafana dashboard, Argo CD
+reporting the application Synced and Healthy, 17 passing browser checks against
+both Compose and Kubernetes, Helm lint and a 16-object render, and a valid
+Terraform module tree. See [evidence](evidence/README.md) for the raw
+transcripts and browser screenshots of the app and every dashboard.
 
 ## Architecture
 

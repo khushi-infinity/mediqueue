@@ -12,6 +12,7 @@ python3 scripts/troubleshooting-check.py       # the failure-simulation transcri
 node scripts/browser-check.mjs                 # application screenshots
 GRAFANA_PASSWORD="$(bash scripts/grafana-password.sh)" node scripts/grafana-screenshot.mjs
 node scripts/render-evidence.mjs               # terminal screenshots of the transcripts
+ARGO_PASSWORD="$(bash scripts/argocd-password.sh)" node scripts/dashboard-screenshots.mjs
 ```
 
 Each `*.txt` file records the timestamp, the exact command and its exit code.
@@ -42,6 +43,36 @@ The matching `*.json` file carries the same result in machine-readable form.
 | `browser-results.json` | The list of checks that passed |
 | `k8s/` | The same browser suite and screenshots, captured against the Kubernetes deployment |
 | `screenshots/` | Terminal-style renderings of every `.txt` transcript above |
+| `dashboards/` | Browser captures of the Prometheus and Argo CD UIs and the app through the Ingress |
+
+## Dashboards
+
+Captured in a real browser against the running cluster, not composed by hand.
+
+| File | What it shows |
+| --- | --- |
+| `dashboards/prometheus-targets.png` | Every backend replica discovered by the `mediqueue` job, all `UP` |
+| `dashboards/prometheus-graph.png` | A live `rate()` graph of request rate broken down by route |
+| `dashboards/prometheus-alerts.png` | The two configured alert rules |
+| `dashboards/prometheus-rules.png` | The loaded rule group with its expressions |
+| `dashboards/argocd-applications.png` | The Argo CD applications list, showing `mediqueue` Synced and Healthy |
+| `dashboards/argocd-mediqueue.png` | The application detail view with its resource tree |
+| `dashboards/app-ingress.png` | The application served through the Ingress hostname, no port-forward |
+| `grafana-dashboard.png` | The provisioned Grafana dashboard with live panels |
+
+The Prometheus graphs and the Grafana panels were captured while a load test was
+running, so they show real traffic. Argo CD is captured separately with the load
+stopped: its UI ships a large JavaScript bundle, and on a single-node cluster a
+saturating load test can starve the server past the page timeouts.
+
+Regenerate them with:
+
+```bash
+python3 scripts/load.py --url http://mediqueue.localhost:8088 --seconds 200 --workers 4 &
+DASHBOARDS=prometheus,app node scripts/dashboard-screenshots.mjs
+GRAFANA_PASSWORD="$(bash scripts/grafana-password.sh)" node scripts/grafana-screenshot.mjs
+DASHBOARDS=argo ARGO_PASSWORD="$(bash scripts/argocd-password.sh)" node scripts/dashboard-screenshots.mjs
+```
 
 ## About The Screenshots
 

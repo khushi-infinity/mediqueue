@@ -26,6 +26,7 @@ found and fixed, and what remains unproven.
 | Failure lab | `python3 scripts/troubleshooting-check.py` | Diagnosed, repaired, cleaned up |
 | GitOps | `bash scripts/local-gitops.sh` | Application `Synced` + `Healthy` |
 | Terminal screenshots | `node scripts/render-evidence.mjs` | 12 PNGs rendered from the transcripts |
+| Dashboard screenshots | `node scripts/dashboard-screenshots.mjs` | 7 browser captures of Prometheus, Argo CD and the Ingress |
 | Slide deck | `.venv/bin/python scripts/build-slides.py` | 17-page PDF written |
 
 ## Defects Found And Fixed During This Review
@@ -72,6 +73,17 @@ found and fixed, and what remains unproven.
     wedged hook Job, the Application kept waiting on it; changing the spec could
     not start a new operation. Clearing `status.operationState` released it. Worth
     knowing before you spend ten minutes staring at `OutOfSync`.
+12. **`input[type="text"]` does not match an input with no type attribute.** The
+    Argo CD login field read `type === "text"` in the DOM, because that is the
+    property's default value, but the CSS attribute selector matches attributes
+    and therefore found nothing. Playwright waited out a 90-second timeout on an
+    element that looked present. Selecting by accessible role fixed it. The same
+    trap applies to any attribute selector on an omitted attribute.
+13. **Screenshotting Argo CD under load does not work.** Its UI ships a large
+    JavaScript bundle, and a saturating `scripts/load.py` run on a single-node
+    cluster starved the server long enough that the page never hydrated. The
+    dashboard capture now takes a `DASHBOARDS` subset so Prometheus and Grafana
+    can be shot mid-load and Argo CD afterwards with the load stopped.
 
 ## Claims That Are Not Verified Here
 

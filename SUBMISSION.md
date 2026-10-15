@@ -104,19 +104,21 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | Ingress reachable at `mediqueue.localhost:8088` | `README.md` (Local Kubernetes) |
 | All pods `Running`, migration Job `Complete` | `evidence/kubernetes.txt`, `evidence/screenshots/kubernetes.png` |
 | HPA observed scaling the backend 2 → 3 and back to 2 | `LOCAL-REVIEW.md` (What Was Actually Run) |
-| Argo CD reconciled the chart to `Synced`/`Healthy` | `evidence/argocd.json` |
+| Argo CD reconciled the chart to `Synced`/`Healthy` | `evidence/argocd.json`, `evidence/dashboards/argocd-mediqueue.png` |
 | The UI passes the browser suite on Kubernetes | `evidence/k8s/browser-results.json` |
+| Application screenshot through the Ingress hostname | `evidence/dashboards/app-ingress.png` |
 
 ## M9 — Observability
 
 | Criterion | Where |
 | --- | --- |
 | `/metrics` returns Prometheus format | `evidence/metrics.txt` |
-| Prometheus installed and scraping every backend replica | `evidence/prometheus-targets.json` |
+| Prometheus installed and scraping every backend replica | `evidence/prometheus-targets.json`, `evidence/dashboards/prometheus-targets.png` |
 | Grafana installed and reachable | `evidence/kubernetes.txt` |
 | At least one live dashboard panel | `helm/mediqueue/dashboards/mediqueue.json` |
 | The provisioned dashboard rendering live data | `evidence/grafana-dashboard.png` |
-| A load test producing real counters and route labels | `evidence/prometheus-targets.json` |
+| A load test producing real counters and route labels | `evidence/dashboards/prometheus-graph.png` |
+| Alert rules loaded into Prometheus | `evidence/dashboards/prometheus-rules.png`, `evidence/dashboards/prometheus-alerts.png` |
 
 ## M10 — Presentation And Documentation
 
