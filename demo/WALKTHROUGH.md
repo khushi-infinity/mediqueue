@@ -7,12 +7,38 @@ each block states what you should see.
 
 ## 0. Before you start
 
+Requirements: Docker Desktop (or another Docker engine), Node 20+, Python 3.13,
+Helm 3, kubectl, kind and Terraform 1.11+.
+
 ```bash
 python3 -m venv .venv && .venv/bin/python -m pip install -r backend/requirements-dev.txt
 ```
 
-Requirements: Docker Desktop (or another Docker engine), Node 20+, Python 3.13,
-Helm 3, kubectl, kind and Terraform 1.11+.
+Bring the whole stack up before recording. Each step needs the previous one:
+
+```bash
+docker compose up --build -d     # application, database and migrations
+python3 scripts/seed.py          # synthetic doctors and appointments
+
+bash scripts/local-k8s.sh        # Kind cluster, Traefik, metrics-server, Helm release
+bash scripts/local-gitops.sh     # Argo CD, tracking this repository on GitHub
+```
+
+Every surface is then live at once:
+
+| Surface | Address | Credentials |
+| --- | --- | --- |
+| Application | <http://mediqueue.localhost:8088> | none |
+| API docs | <http://localhost:8000/docs> | none |
+| Prometheus | <http://localhost:9090> | none |
+| Grafana | <http://localhost:3001> | `admin` / `bash scripts/grafana-password.sh` |
+| Argo CD | <http://argocd.localhost:8088> | `admin` / `bash scripts/argocd-password.sh` |
+
+Keep the passwords out of the recording. The Compose stack and the Kind cluster
+run side by side; the cluster is the one the later sections exercise.
+
+To record in a single pass, walk the sections in order and leave the failure
+simulation (section 9) for last, because it needs the cluster quiet.
 
 ---
 
