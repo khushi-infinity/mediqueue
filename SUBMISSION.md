@@ -46,16 +46,18 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | --- | --- |
 | Public repository | To be pushed to `github.com/khushi-infinity/mediqueue` |
 | Meaningful commit messages | `git log`, `evidence/commit-history.txt` |
+| Commit history screenshot, at least 10 commits | `evidence/screenshots/commit-history.png` (11 commits) |
 | `.gitignore` covers `.env`, `__pycache__`, `node_modules`, `.venv` | `.gitignore` |
 
 ## M4 — Docker
 
 | Criterion | Where |
 | --- | --- |
-| `backend/Dockerfile` builds | `evidence/compose-build.txt` |
+| `backend/Dockerfile` builds | `evidence/compose-build.txt`, `evidence/screenshots/compose-build.png` |
 | Multi-stage frontend build | `frontend/Dockerfile` |
 | Non-root runtime users | `evidence/non-root.txt` (UIDs 10001 and 101) |
-| `docker compose up --build` starts the stack | `evidence/compose.txt` |
+| `docker compose up --build` starts the stack | `evidence/compose.txt`, `evidence/screenshots/compose.png` |
+| Browser at `localhost:3000` | `evidence/application-desktop.png` |
 
 ## M5 — CI/CD
 
@@ -95,20 +97,26 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | --- | --- |
 | `k8s/namespace.yaml` applies | `evidence/kubernetes.txt` |
 | Chart with `Chart.yaml`, `values.yaml`, templates | `helm/mediqueue/` |
-| `helm upgrade --install` deploys without errors | `evidence/helm.txt` |
+| `helm upgrade --install` deploys without errors | `evidence/helm.txt`, `evidence/screenshots/helm.png` |
 | Two replicas each for backend and frontend | `values.yaml` |
 | ClusterIP Services | `helm/mediqueue/templates/application.yaml` |
 | Ingress routes `/` to frontend and `/api` to backend | `helm/mediqueue/templates/networking.yaml` |
-| All pods `Running` | `evidence/kubernetes.txt` |
+| Ingress reachable at `mediqueue.localhost:8088` | `README.md` (Local Kubernetes) |
+| All pods `Running`, migration Job `Complete` | `evidence/kubernetes.txt`, `evidence/screenshots/kubernetes.png` |
+| HPA observed scaling the backend 2 → 3 and back to 2 | `LOCAL-REVIEW.md` (What Was Actually Run) |
+| Argo CD reconciled the chart to `Synced`/`Healthy` | `evidence/argocd.json` |
+| The UI passes the browser suite on Kubernetes | `evidence/k8s/browser-results.json` |
 
 ## M9 — Observability
 
 | Criterion | Where |
 | --- | --- |
 | `/metrics` returns Prometheus format | `evidence/metrics.txt` |
-| Prometheus installed and scraping | `evidence/prometheus-targets.json` |
+| Prometheus installed and scraping every backend replica | `evidence/prometheus-targets.json` |
 | Grafana installed and reachable | `evidence/kubernetes.txt` |
 | At least one live dashboard panel | `helm/mediqueue/dashboards/mediqueue.json` |
+| The provisioned dashboard rendering live data | `evidence/grafana-dashboard.png` |
+| A load test producing real counters and route labels | `evidence/prometheus-targets.json` |
 
 ## M10 — Presentation And Documentation
 
@@ -126,5 +134,6 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
    treats a missing video as zero for M10.
 3. **AWS apply and destroy**, with console screenshots, if the evaluation
    requires real cloud proof. The code is ready and validated.
-4. **HPA scale-out** is configured but not claimed as observed; capture it during
-   the video with `scripts/load.py` running.
+4. **HPA scale-out** was observed locally (2 → 3 replicas at 55% CPU, back to 2
+   when the load stopped). Re-capture it during the video with `scripts/load.py`
+   running so the recording shows it live.

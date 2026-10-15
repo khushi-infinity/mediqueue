@@ -229,10 +229,12 @@ kubectl --context kind-mediqueue -n mediqueue get hpa
 kubectl --context kind-mediqueue -n mediqueue top pods
 ```
 
-The HPA targets 70% CPU and scales between two and four backend replicas. Light
-traffic may not cause scaling; a configured HPA is not proof of an observed
-scale-out. Prometheus defines unavailable-backend and error-ratio alerts. No
-external alert notification destination is configured in the local demonstration.
+The HPA targets 70% CPU and scales between two and four backend replicas. A
+40-second run of the load script was enough to push the backend from two
+replicas to three on a single-node Kind cluster, and it returned to two once the
+load stopped — an observed scale-out rather than a configured one. Prometheus
+defines unavailable-backend and error-ratio alerts. No external alert
+notification destination is configured in the local demonstration.
 
 ## Argo CD And GitOps
 
