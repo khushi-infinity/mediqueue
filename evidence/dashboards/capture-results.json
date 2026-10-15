@@ -1,0 +1,17 @@
+{
+  "capturedAt": "2026-10-15T14:21:11.945Z",
+  "results": [
+    {
+      "file": "argocd-applications.png",
+      "label": "Argo CD applications",
+      "url": "http://argocd.localhost:8088/applications",
+      "ok": true
+    },
+    {
+      "file": "argocd-mediqueue.png",
+      "label": "Argo CD application detail",
+      "url": "http://argocd.localhost:8088/applications",
+      "ok": true
+    }
+  ]
+}
