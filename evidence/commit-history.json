@@ -1,6 +1,6 @@
 {
   "name": "commit-history",
-  "capturedAt": "2026-10-15T13:44:57.515775+00:00",
+  "capturedAt": "2026-10-15T13:49:07.185004+00:00",
   "command": [
     "git",
     "log",
@@ -8,6 +8,6 @@
     "--format=%h %s"
   ],
   "exitCode": 0,
-  "stdout": "113e526 fix(gitops): make the local overlay authoritative over the promoted release\nf2ce635 fix(helm): make the migration Job wait for PostgreSQL\n24c4dc9 feat(devops): add Compose stack, Helm chart, Terraform, CI and automation scripts\n9205062 feat(ui): add MediQueue clinic front-desk dashboard\n09a668d feat(api): add MediQueue FastAPI backend with doctors, appointments and metrics\n",
+  "stdout": "8d7008f docs(review): record the two defects the cluster work uncovered\n7a3a6b5 docs: claim only what the Kind, monitoring and GitOps runs proved\ncc6e9b2 docs(demo): regenerate the deck and demo script after the cluster findings\n5d44a96 feat(evidence): render the captured transcripts as terminal screenshots\n0a4d869 chore(evidence): refresh the captured transcripts from the final run\ne7f80d4 test(browser): run the Playwright suite against the Kubernetes deployment\n113e526 fix(gitops): make the local overlay authoritative over the promoted release\nf2ce635 fix(helm): make the migration Job wait for PostgreSQL\n24c4dc9 feat(devops): add Compose stack, Helm chart, Terraform, CI and automation scripts\n9205062 feat(ui): add MediQueue clinic front-desk dashboard\n09a668d feat(api): add MediQueue FastAPI backend with doctors, appointments and metrics\n",
   "stderr": ""
 }

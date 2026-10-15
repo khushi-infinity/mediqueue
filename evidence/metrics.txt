@@ -1,4 +1,4 @@
-Captured at 2026-10-15T13:44:57.451697+00:00
+Captured at 2026-10-15T13:49:07.140055+00:00
 Command: curl -fsS http://localhost:8000/metrics
 Exit code: 0
 
@@ -31,7 +31,7 @@ process_resident_memory_bytes 8.5397504e+07
 process_start_time_seconds 1.79207188739e+09
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 0.8600000000000001
+process_cpu_seconds_total 2.01
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
 process_open_fds 10.0
@@ -40,9 +40,9 @@ process_open_fds 10.0
 process_max_fds 1.048576e+06
 # HELP mediqueue_http_requests_total HTTP requests
 # TYPE mediqueue_http_requests_total counter
-mediqueue_http_requests_total{method="GET",route="/health",status="200"} 1.0
-mediqueue_http_requests_total{method="GET",route="unmatched",status="404"} 1.0
-mediqueue_http_requests_total{method="GET",route="/ready",status="200"} 1.0
+mediqueue_http_requests_total{method="GET",route="/health",status="200"} 9.0
+mediqueue_http_requests_total{method="GET",route="unmatched",status="404"} 9.0
+mediqueue_http_requests_total{method="GET",route="/ready",status="200"} 49.0
 # HELP mediqueue_http_requests_created HTTP requests
 # TYPE mediqueue_http_requests_created gauge
 mediqueue_http_requests_created{method="GET",route="/health",status="200"} 1.792071888785119e+09
@@ -50,57 +50,57 @@ mediqueue_http_requests_created{method="GET",route="unmatched",status="404"} 1.7
 mediqueue_http_requests_created{method="GET",route="/ready",status="200"} 1.792071893016176e+09
 # HELP mediqueue_http_request_duration_seconds HTTP latency
 # TYPE mediqueue_http_request_duration_seconds histogram
-mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_count{method="GET",route="/health"} 1.0
-mediqueue_http_request_duration_seconds_sum{method="GET",route="/health"} 0.0012038330000905262
-mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_count{method="GET",route="unmatched"} 1.0
-mediqueue_http_request_duration_seconds_sum{method="GET",route="unmatched"} 0.00021033299981354503
-mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="/ready"} 0.0
-mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="/ready"} 0.0
-mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_count{method="GET",route="/ready"} 1.0
-mediqueue_http_request_duration_seconds_sum{method="GET",route="/ready"} 0.021784042000035697
+mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_count{method="GET",route="/health"} 9.0
+mediqueue_http_request_duration_seconds_sum{method="GET",route="/health"} 0.016901998000321328
+mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_count{method="GET",route="unmatched"} 9.0
+mediqueue_http_request_duration_seconds_sum{method="GET",route="unmatched"} 0.0063317089989141095
+mediqueue_http_request_duration_seconds_bucket{le="0.005",method="GET",route="/ready"} 45.0
+mediqueue_http_request_duration_seconds_bucket{le="0.01",method="GET",route="/ready"} 47.0
+mediqueue_http_request_duration_seconds_bucket{le="0.025",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.05",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.075",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.1",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.25",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.5",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="0.75",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="1.0",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="2.5",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="5.0",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="7.5",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="10.0",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_bucket{le="+Inf",method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_count{method="GET",route="/ready"} 49.0
+mediqueue_http_request_duration_seconds_sum{method="GET",route="/ready"} 0.12405112899841697
 # HELP mediqueue_http_request_duration_seconds_created HTTP latency
 # TYPE mediqueue_http_request_duration_seconds_created gauge
 mediqueue_http_request_duration_seconds_created{method="GET",route="/health"} 1.7920718887851481e+09

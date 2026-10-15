@@ -46,7 +46,7 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | --- | --- |
 | Public repository | To be pushed to `github.com/khushi-infinity/mediqueue` |
 | Meaningful commit messages | `git log`, `evidence/commit-history.txt` |
-| Commit history screenshot, at least 10 commits | `evidence/screenshots/commit-history.png` (11 commits) |
+| Commit history screenshot showing at least 10 commits | `evidence/screenshots/commit-history.png` |
 | `.gitignore` covers `.env`, `__pycache__`, `node_modules`, `.venv` | `.gitignore` |
 
 ## M4 — Docker

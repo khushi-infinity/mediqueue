@@ -1,4 +1,4 @@
-Captured at 2026-10-15T13:44:57.397579+00:00
+Captured at 2026-10-15T13:49:07.090936+00:00
 Command: kubectl --context kind-mediqueue -n argocd get application mediqueue -o json
 Exit code: 0
 
@@ -10,10 +10,10 @@ Exit code: 0
             "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"argoproj.io/v1alpha1\",\"kind\":\"Application\",\"metadata\":{\"annotations\":{},\"name\":\"mediqueue\",\"namespace\":\"argocd\"},\"spec\":{\"destination\":{\"namespace\":\"mediqueue\",\"server\":\"https://kubernetes.default.svc\"},\"ignoreDifferences\":[{\"group\":\"apps\",\"jsonPointers\":[\"/spec/replicas\"],\"kind\":\"Deployment\",\"name\":\"backend\"}],\"project\":\"default\",\"source\":{\"helm\":{\"releaseName\":\"mediqueue\",\"valueFiles\":[\"values-release.json\",\"values-local.yaml\"]},\"path\":\"helm/mediqueue\",\"repoURL\":\"git://host.docker.internal:9418/mediqueue.git\",\"targetRevision\":\"main\"},\"syncPolicy\":{\"automated\":{\"prune\":false,\"selfHeal\":true},\"syncOptions\":[\"CreateNamespace=true\"]}}}\n"
         },
         "creationTimestamp": "2026-10-15T13:08:50Z",
-        "generation": 37,
+        "generation": 38,
         "name": "mediqueue",
         "namespace": "argocd",
-        "resourceVersion": "6634",
+        "resourceVersion": "7002",
         "uid": "74587582-350a-4342-b8d4-06296b5cdf57"
     },
     "spec": {
@@ -295,7 +295,7 @@ Exit code: 0
                 }
             }
         },
-        "reconciledAt": "2026-10-15T13:42:20Z",
+        "reconciledAt": "2026-10-15T13:46:36Z",
         "resources": [
             {
                 "kind": "ConfigMap",
