@@ -1,5 +1,8 @@
 # MediQueue
 
+[![MediQueue CI/CD](https://github.com/khushi-infinity/mediqueue/actions/workflows/mediqueue.yml/badge.svg)](https://github.com/khushi-infinity/mediqueue/actions/workflows/mediqueue.yml)
+[![Images: GHCR](https://img.shields.io/badge/images-ghcr.io%2Fkhushi--infinity-2496ed?logo=docker&logoColor=white)](https://github.com/khushi-infinity/mediqueue/pkgs/container/mediqueue-backend)
+
 **Khushi Sarawagi | 24BCS10361**
 
 MediQueue is a clinic appointment desk. Reception staff book, check in, complete

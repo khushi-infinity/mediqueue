@@ -32,6 +32,12 @@ const files = [
   'troubleshooting.txt',
   'argocd.txt',
   'commit-history.txt',
+  'ci-runs.txt',
+  'ci-run.txt',
+  'ci-jobs.txt',
+  'ci-trivy.txt',
+  'ghcr-mediqueue-backend.txt',
+  'ghcr-mediqueue-frontend.txt',
 ];
 
 const escape = text =>

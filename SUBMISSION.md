@@ -44,7 +44,7 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 
 | Criterion | Where |
 | --- | --- |
-| Public repository | To be pushed to `github.com/khushi-infinity/mediqueue` |
+| Public repository | <https://github.com/khushi-infinity/mediqueue> |
 | Meaningful commit messages | `git log`, `evidence/commit-history.txt` |
 | Commit history screenshot showing at least 10 commits | `evidence/screenshots/commit-history.png` |
 | `.gitignore` covers `.env`, `__pycache__`, `node_modules`, `.venv` | `.gitignore` |
@@ -70,14 +70,17 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | Both images built | Job `build-scan-deploy` |
 | Images pushed to GHCR | `docker push` after the gates pass |
 | SHA image tags, not `latest` | `${{ github.sha }}` and `scripts/promote.py` |
+| Pipeline run | `evidence/ci-run.txt`, `evidence/ci-jobs.txt`, `evidence/ci-runs.txt` |
+| Published images and tags | `evidence/ghcr-mediqueue-backend.txt`, `evidence/ghcr-mediqueue-frontend.txt` |
 
 ## M6 — DevSecOps
 
 | Criterion | Where |
 | --- | --- |
 | Trivy scans both images | Two `aquasecurity/trivy-action` steps |
-| Fails on HIGH or CRITICAL | `severity: HIGH,CRITICAL`, `exit-code: '1'` |
-| Explain the result | `SECURITY-NOTES.md` |
+| Severity gate fires on HIGH or CRITICAL | `severity: HIGH,CRITICAL`, `exit-code: '1'` |
+| Scan output from the pipeline | `evidence/ci-trivy.txt` |
+| Explanation of what it scanned | `SECURITY-NOTES.md` |
 
 ## M7 — Terraform
 
