@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="Illustration of a clinic reception desk">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7f2f0"/>
+      <stop offset="1" stop-color="#d3e6e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="260" fill="url(#sky)"/>
+  <circle cx="330" cy="58" r="34" fill="#ffffff" opacity=".55"/>
+  <rect x="0" y="196" width="400" height="64" fill="#bcd8d4"/>
+  <rect x="34" y="128" width="150" height="70" rx="8" fill="#ffffff"/>
+  <rect x="34" y="128" width="150" height="14" rx="7" fill="#1c6f7a"/>
+  <rect x="52" y="156" width="60" height="8" rx="4" fill="#cfe0de"/>
+  <rect x="52" y="172" width="96" height="8" rx="4" fill="#dbe8e6"/>
+  <rect x="236" y="96" width="120" height="102" rx="10" fill="#ffffff"/>
+  <rect x="248" y="110" width="44" height="44" rx="6" fill="#1c6f7a"/>
+  <rect x="258" y="122" width="24" height="6" rx="3" fill="#bcd8d4"/>
+  <rect x="264" y="126" width="12" height="20" rx="3" fill="#bcd8d4"/>
+  <rect x="248" y="164" width="96" height="8" rx="4" fill="#dbe8e6"/>
+  <rect x="248" y="180" width="66" height="8" rx="4" fill="#e6efee"/>
+  <path d="M196 130c10-16 32-14 38 2 6 16-14 30-38 46-24-16-44-30-38-46 6-16 28-18 38-2z" fill="#e08d86" opacity=".9"/>
+  <circle cx="96" cy="86" r="20" fill="#ffffff" opacity=".7"/>
+  <circle cx="140" cy="70" r="12" fill="#ffffff" opacity=".6"/>
+</svg>

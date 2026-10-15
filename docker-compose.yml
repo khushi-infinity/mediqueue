@@ -1,0 +1,46 @@
+name: mediqueue
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: mediqueue
+      POSTGRES_USER: mediqueue
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mediqueue-local-only}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U mediqueue -d mediqueue]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  migrate:
+    image: mediqueue-backend:local
+    environment:
+      DATABASE_URL: postgresql+psycopg://mediqueue:${POSTGRES_PASSWORD:-mediqueue-local-only}@postgres:5432/mediqueue
+    command: [alembic, upgrade, head]
+    depends_on:
+      postgres:
+        condition: service_healthy
+  backend:
+    build: ./backend
+    image: mediqueue-backend:local
+    environment:
+      DATABASE_URL: postgresql+psycopg://mediqueue:${POSTGRES_PASSWORD:-mediqueue-local-only}@postgres:5432/mediqueue
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/ready')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  frontend:
+    build: ./frontend
+    image: mediqueue-frontend:local
+    ports: ["127.0.0.1:3000:8080"]
+    depends_on:
+      backend:
+        condition: service_healthy
+volumes:
+  postgres-data:
