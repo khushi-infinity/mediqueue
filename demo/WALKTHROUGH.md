@@ -167,13 +167,14 @@ kubectl --context kind-mediqueue -n mediqueue top pods
 bash scripts/local-gitops.sh
 ```
 
-Argo CD syncs `helm/mediqueue` from `main`, rendering the CI-promoted
-`values-release.json` first and the `values-local.yaml` overlay last, so the
-local cluster uses its loaded images. Show the Application as **Synced** and
-**Healthy**, then change a value in Git and watch self-healing reconcile it.
+Argo CD syncs `helm/mediqueue` from `main` **on GitHub**, rendering the
+CI-promoted `values-release.json` first and the `values-local.yaml` overlay last,
+so the local cluster uses its loaded images. Show the Application as **Synced**
+and **Healthy** with the tracked revision matching the pushed commit, then change
+a value in Git and watch self-healing reconcile it.
 
-If the repository has not been pushed yet, point the Application at a local
-mirror instead: `ARGO_REPO_URL=git://host.docker.internal:9418/mediqueue.git
+Offline, or before a push, the same thing can be rehearsed against a local
+mirror: `ARGO_REPO_URL=git://host.docker.internal:9418/mediqueue.git
 bash scripts/local-gitops.sh` (see the README for the two commands that create
 the mirror).
 

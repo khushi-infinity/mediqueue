@@ -1,7 +1,15 @@
-Captured at 2026-10-15T14:32:59.188097+00:00
+Captured at 2026-10-15T15:25:56.681589+00:00
 Command: git log -15 --format=%h %s
 Exit code: 0
 
+4a85398 chore(gitops): promote verified MediQueue images [skip ci]
+4b68566 docs: present the pipeline as a result, not a plan
+231fc20 chore(gitops): promote verified MediQueue images [skip ci]
+05fc492 feat(evidence): capture the green pipeline and its artifacts
+16d42cd chore(gitops): promote verified MediQueue images [skip ci]
+d9984f1 fix(ci): stop doubling the image tag in the cluster deploy
+c3e89d5 feat(ci): capture the pipeline run and published images as evidence
+332637b chore(evidence): recapture after the commit identity rewrite
 4d36893 docs: index the dashboard captures and correct the claims around them
 dcf8621 feat(evidence): capture the Prometheus, Grafana and Argo CD UIs in a browser
 fb0b6f4 docs: show how to move Argo CD off the local mirror and onto GitHub
@@ -9,12 +17,4 @@ aee1aad chore(evidence): recapture so the history screenshot shows every commit
 1cff757 docs(review): record the two defects the cluster work uncovered
 9c8b827 docs: claim only what the Kind, monitoring and GitOps runs proved
 4561c9e docs(demo): regenerate the deck and demo script after the cluster findings
-9d709ed feat(evidence): render the captured transcripts as terminal screenshots
-401cc41 chore(evidence): refresh the captured transcripts from the final run
-5c0c5e3 test(browser): run the Playwright suite against the Kubernetes deployment
-f97d4b4 fix(gitops): make the local overlay authoritative over the promoted release
-57f4a39 fix(helm): make the migration Job wait for PostgreSQL
-99a7700 feat(devops): add Compose stack, Helm chart, Terraform, CI and automation scripts
-25e95f3 feat(ui): add MediQueue clinic front-desk dashboard
-8e84630 feat(api): add MediQueue FastAPI backend with doctors, appointments and metrics
 

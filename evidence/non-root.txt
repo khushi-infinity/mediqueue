@@ -1,4 +1,4 @@
-Captured at 2026-10-15T14:32:56.530018+00:00
+Captured at 2026-10-15T15:25:54.017362+00:00
 Command: docker image inspect mediqueue-backend:local mediqueue-frontend:local --format {{.RepoTags}} user={{.Config.User}}
 Exit code: 0
 

@@ -282,8 +282,20 @@ The GitOps demonstration pulls the scanned registry images by immutable SHA.
 For AWS, replace the local networking values with `values-aws.yaml` and configure
 the cloud cluster destination.
 
-Until the repository is pushed to GitHub, GitOps can still be verified against
-any reachable clone of it by overriding the tracked repository:
+Argo CD tracks the real repository, so applying the committed Application is all
+that is needed:
+
+```bash
+bash scripts/local-gitops.sh
+```
+
+It renders `helm/mediqueue` from `main` at
+`https://github.com/khushi-infinity/mediqueue.git` and reaches
+`Synced`/`Healthy` at the pushed revision, which is what `evidence/argocd.json`
+records. The repository is public, so no credentials are involved.
+
+To rehearse GitOps offline — before a push, or without network access — override
+the tracked repository with any reachable clone:
 
 ```bash
 git clone --bare . /tmp/gitserve/mediqueue.git
@@ -294,13 +306,6 @@ ARGO_REPO_URL=git://172.29.0.1:9418/mediqueue.git bash scripts/local-gitops.sh
 `172.29.0.1` is the Docker bridge gateway on this machine; substitute the value
 from `docker network inspect kind`. Every other field of the Application,
 including the Helm path and value files, stays exactly as committed.
-
-Once the repository is pushed, point Argo CD at GitHub and stop the mirror:
-
-```bash
-kubectl --context kind-mediqueue -n argocd apply -f gitops/application.yaml
-pkill -f git-daemon
-```
 
 ## AWS Infrastructure
 

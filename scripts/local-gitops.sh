@@ -18,8 +18,9 @@ helm --kube-context "$context" upgrade --install argocd argo/argo-cd \
 
 kubectl --context "$context" apply -f gitops/argocd-ingress.yaml
 
-# ARGO_REPO_URL lets you verify GitOps before the repository is pushed to GitHub.
-# Point it at any reachable clone of this repository, for example a local mirror:
+# ARGO_REPO_URL verifies GitOps against any reachable clone of this repository,
+# which is useful offline or before a push. The default applies the committed
+# Application, which tracks GitHub. To use a local mirror:
 #   git clone --bare . /tmp/gitserve/mediqueue.git && git daemon --reuseaddr \
 #     --export-all --base-path=/tmp/gitserve --port=9418 &
 #   ARGO_REPO_URL=git://172.29.0.1:9418/mediqueue.git bash scripts/local-gitops.sh

@@ -1,4 +1,4 @@
-Captured at 2026-10-15T14:32:59.109050+00:00
+Captured at 2026-10-15T15:25:56.588097+00:00
 Command: kubectl --context kind-mediqueue -n argocd get application mediqueue -o json
 Exit code: 0
 
@@ -7,13 +7,13 @@ Exit code: 0
     "kind": "Application",
     "metadata": {
         "annotations": {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"argoproj.io/v1alpha1\",\"kind\":\"Application\",\"metadata\":{\"annotations\":{},\"name\":\"mediqueue\",\"namespace\":\"argocd\"},\"spec\":{\"destination\":{\"namespace\":\"mediqueue\",\"server\":\"https://kubernetes.default.svc\"},\"ignoreDifferences\":[{\"group\":\"apps\",\"jsonPointers\":[\"/spec/replicas\"],\"kind\":\"Deployment\",\"name\":\"backend\"}],\"project\":\"default\",\"source\":{\"helm\":{\"releaseName\":\"mediqueue\",\"valueFiles\":[\"values-release.json\",\"values-local.yaml\"]},\"path\":\"helm/mediqueue\",\"repoURL\":\"git://host.docker.internal:9418/mediqueue.git\",\"targetRevision\":\"main\"},\"syncPolicy\":{\"automated\":{\"prune\":false,\"selfHeal\":true},\"syncOptions\":[\"CreateNamespace=true\"]}}}\n"
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"argoproj.io/v1alpha1\",\"kind\":\"Application\",\"metadata\":{\"annotations\":{},\"name\":\"mediqueue\",\"namespace\":\"argocd\"},\"spec\":{\"destination\":{\"namespace\":\"mediqueue\",\"server\":\"https://kubernetes.default.svc\"},\"ignoreDifferences\":[{\"group\":\"apps\",\"jsonPointers\":[\"/spec/replicas\"],\"kind\":\"Deployment\",\"name\":\"backend\"}],\"project\":\"default\",\"source\":{\"helm\":{\"releaseName\":\"mediqueue\",\"valueFiles\":[\"values-release.json\",\"values-local.yaml\"]},\"path\":\"helm/mediqueue\",\"repoURL\":\"https://github.com/khushi-infinity/mediqueue.git\",\"targetRevision\":\"main\"},\"syncPolicy\":{\"automated\":{\"prune\":false,\"selfHeal\":true},\"syncOptions\":[\"CreateNamespace=true\"]}}}\n"
         },
         "creationTimestamp": "2026-10-15T13:08:50Z",
-        "generation": 64,
+        "generation": 84,
         "name": "mediqueue",
         "namespace": "argocd",
-        "resourceVersion": "11108",
+        "resourceVersion": "15650",
         "uid": "74587582-350a-4342-b8d4-06296b5cdf57"
     },
     "spec": {
@@ -41,7 +41,7 @@ Exit code: 0
                 ]
             },
             "path": "helm/mediqueue",
-            "repoURL": "git://host.docker.internal:9418/mediqueue.git",
+            "repoURL": "https://github.com/khushi-infinity/mediqueue.git",
             "targetRevision": "main"
         },
         "syncPolicy": {
@@ -295,7 +295,7 @@ Exit code: 0
                 }
             }
         },
-        "reconciledAt": "2026-10-15T14:32:08Z",
+        "reconciledAt": "2026-10-15T15:24:20Z",
         "resources": [
             {
                 "kind": "ConfigMap",
@@ -492,11 +492,11 @@ Exit code: 0
                         ]
                     },
                     "path": "helm/mediqueue",
-                    "repoURL": "git://host.docker.internal:9418/mediqueue.git",
+                    "repoURL": "https://github.com/khushi-infinity/mediqueue.git",
                     "targetRevision": "main"
                 }
             },
-            "revision": "4d368933b5168b39928ac660f93da637045437bb",
+            "revision": "4a85398356a5c8adf5b84e70d5d4c4d29b502888",
             "status": "Synced"
         }
     }

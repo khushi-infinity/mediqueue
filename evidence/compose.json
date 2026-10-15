@@ -1,12 +1,12 @@
 {
   "name": "compose",
-  "capturedAt": "2026-10-15T14:32:56.458830+00:00",
+  "capturedAt": "2026-10-15T15:25:53.938156+00:00",
   "command": [
     "docker",
     "compose",
     "ps"
   ],
   "exitCode": 0,
-  "stdout": "NAME                   IMAGE                                                                     COMMAND                  SERVICE    CREATED          STATUS                       PORTS\nmediqueue-backend-1    sha256:a8a3ead9cbdc44637fdfcc526f5716f7db614e0e6eae5a4de72a971751f50a64   \"uvicorn app.main:ap\u2026\"   backend    48 minutes ago   Up 48 minutes (healthy)      127.0.0.1:8000->8000/tcp\nmediqueue-frontend-1   sha256:331f2f57f300323f8ecdbdcfaea054ecc28ac738a758ab0be6d05cb817122633   \"/docker-entrypoint.\u2026\"   frontend   48 minutes ago   Up 48 minutes (healthy)      127.0.0.1:3000->8080/tcp\nmediqueue-postgres-1   postgres:17-alpine                                                        \"docker-entrypoint.s\u2026\"   postgres   2 hours ago      Up About an hour (healthy)   5432/tcp\n",
+  "stdout": "NAME                   IMAGE                                                                     COMMAND                  SERVICE    CREATED       STATUS                 PORTS\nmediqueue-backend-1    sha256:a8a3ead9cbdc44637fdfcc526f5716f7db614e0e6eae5a4de72a971751f50a64   \"uvicorn app.main:ap\u2026\"   backend    2 hours ago   Up 2 hours (healthy)   127.0.0.1:8000->8000/tcp\nmediqueue-frontend-1   sha256:331f2f57f300323f8ecdbdcfaea054ecc28ac738a758ab0be6d05cb817122633   \"/docker-entrypoint.\u2026\"   frontend   2 hours ago   Up 2 hours (healthy)   127.0.0.1:3000->8080/tcp\nmediqueue-postgres-1   postgres:17-alpine                                                        \"docker-entrypoint.s\u2026\"   postgres   3 hours ago   Up 2 hours (healthy)   5432/tcp\n",
   "stderr": ""
 }

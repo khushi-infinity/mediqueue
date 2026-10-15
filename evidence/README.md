@@ -52,7 +52,7 @@ rather than scraping output.
 | `terraform-validate.txt` | `terraform validate` on the initialised module tree |
 | `metrics.txt` | The Prometheus exposition from `GET /metrics` |
 | `prometheus-targets.json` | Both backend replicas scraped by the `mediqueue` job |
-| `argocd.json` | The Argo CD Application, its sync and health status |
+| `argocd.json` | The Argo CD Application synced from GitHub, its revision, sync and health |
 | `commit-history.txt` | The commit log |
 | `troubleshooting.txt` | `ImagePullBackOff` and an endpoint-less Service, diagnosed, repaired and cleaned up |
 | `application-desktop.png` | The dashboard at 1440 px against the Compose stack |

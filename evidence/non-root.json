@@ -1,6 +1,6 @@
 {
   "name": "non-root",
-  "capturedAt": "2026-10-15T14:32:56.530018+00:00",
+  "capturedAt": "2026-10-15T15:25:54.017362+00:00",
   "command": [
     "docker",
     "image",

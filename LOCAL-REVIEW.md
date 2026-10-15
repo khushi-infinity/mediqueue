@@ -24,7 +24,7 @@ found and fixed, and what remains unproven.
 | Autoscaling | `kubectl get hpa` after the load test | Backend scaled 2 → 3, then back to 2 |
 | Grafana | `/api/health`, dashboard search | 11.6.0 healthy, dashboard provisioned |
 | Failure lab | `python3 scripts/troubleshooting-check.py` | Diagnosed, repaired, cleaned up |
-| GitOps | `bash scripts/local-gitops.sh` | Application `Synced` + `Healthy` |
+| GitOps | `kubectl apply -f gitops/application.yaml` | Application `Synced` + `Healthy` at the pushed revision |
 | CI pipeline | `git push origin main` | Both jobs green; both Trivy scans clean |
 | CI artifacts | `gh run download 38755163712` | 26 tests, 17 browser checks, 0 findings |
 | Terminal screenshots | `node scripts/render-evidence.mjs` | 20 PNGs rendered from the transcripts |
@@ -110,11 +110,11 @@ Stated plainly, because an unevidenced claim is worse than a missing one:
 - **AWS is not deployed.** Terraform is formatted and validated only. No plan,
   apply or destroy output from a real account exists, so no VPC or EKS console
   screenshots are present.
-- **Argo CD is verified locally, not in production.** It reconciled this chart
-  from a local mirror of the repository on a Kind cluster and reached
-  `Synced`/`Healthy`. The committed Application points at GitHub, but the
-  captured sync came from a mirror through `ARGO_REPO_URL`, so no sync from
-  GitHub itself is recorded here.
+- **Argo CD is verified locally, not in production.** It reconciles this chart
+  from the real GitHub repository on a Kind cluster and reaches
+  `Synced`/`Healthy` at the pushed revision. A production cluster would need the
+  same plus credentials for a private repository; this one is public, so the sync
+  carries no credentials at all.
 - **The autoscaler was observed scaling up and back down, but not under
   production load.** Two replicas became three at 55% CPU and returned to two.
   That is a real observation on a single node, not a capacity claim.

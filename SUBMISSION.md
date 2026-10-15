@@ -113,7 +113,7 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | Ingress reachable at `mediqueue.localhost:8088` | `README.md` (Local Kubernetes) |
 | All pods `Running`, migration Job `Complete` | `evidence/kubernetes.txt`, `evidence/screenshots/kubernetes.png` |
 | HPA observed scaling the backend 2 → 3 and back to 2 | `LOCAL-REVIEW.md` (What Was Actually Run) |
-| Argo CD reconciled the chart to `Synced`/`Healthy` | `evidence/argocd.json`, `evidence/dashboards/argocd-mediqueue.png` |
+| Argo CD reconciled the chart from the pushed GitHub revision | `evidence/argocd.json` (repoURL + revision), `evidence/dashboards/argocd-mediqueue.png` |
 | The UI passes the browser suite on Kubernetes | `evidence/k8s/browser-results.json` |
 | Application screenshot through the Ingress hostname | `evidence/dashboards/app-ingress.png` |
 
