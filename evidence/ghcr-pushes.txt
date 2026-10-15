@@ -1,0 +1,18 @@
+Captured at 2026-10-15T15:02:01Z
+Command: gh run view 38755163712 --repo khushi-infinity/mediqueue --log  (filtered to the push)
+
+Package pages:
+  https://github.com/khushi-infinity/mediqueue/pkgs/container/mediqueue-backend
+  https://github.com/khushi-infinity/mediqueue/pkgs/container/mediqueue-frontend
+
+104s        Normal    Pulled                  pod/frontend-6cb7df479b-j9wdx           Container image "ghcr.io/khushi-infinity/mediqueue-frontend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+104s        Normal    Pulled                  pod/frontend-6cb7df479b-w92vx           Container image "ghcr.io/khushi-infinity/mediqueue-frontend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+104s        Normal    Pulled                  pod/mediqueue-migrate-1-688hq           Container image "postgres:17-alpine" already present on machine
+73s         Normal    Pulled                  pod/backend-6646657c64-whzgf            Container image "ghcr.io/khushi-infinity/mediqueue-backend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+73s         Normal    Pulled                  pod/backend-6646657c64-zksbh            Container image "ghcr.io/khushi-infinity/mediqueue-backend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+74s         Normal    Pulled                  pod/backend-6646657c64-whzgf            Container image "ghcr.io/khushi-infinity/mediqueue-backend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+74s         Normal    Pulled                  pod/backend-6646657c64-zksbh            Container image "ghcr.io/khushi-infinity/mediqueue-backend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+86s         Normal    Pulled                  pod/mediqueue-migrate-1-688hq           Container image "ghcr.io/khushi-infinity/mediqueue-backend:d9984f13c3ec19acf3acfb3b53c414981a6e4e58" already present on machine
+95s         Normal    Pulled                  pod/postgres-0                          Container image "postgres:17-alpine" already present on machine
+d9984f13c3ec19acf3acfb3b53c414981a6e4e58: digest: sha256:a14b320b6a40d24f75e6971eb1696ca23ac8080497920d3d2d9a7a3a7bb2bb64 size: 2613
+d9984f13c3ec19acf3acfb3b53c414981a6e4e58: digest: sha256:bb494c9b220e27a4b2f2992e9d2af1e7fdd65f2e385adfb41cc09c2d6fc44b3b size: 2405

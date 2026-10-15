@@ -1,0 +1,15 @@
+Captured at 2026-10-15T15:02:01Z
+Command: gh run download 38755163712 -n test-results
+
+<testsuites
+name="pytest
+tests">
+<testsuite
+name="pytest"
+errors="0"
+failures="0"
+skipped="0"
+tests="26"
+time="1.431"
+timestamp="2026-10-15T14:52:09.633010+00:00"
+hostname="runnervmmprz5">

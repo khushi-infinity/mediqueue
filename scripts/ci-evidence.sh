@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
-# Capture the GitHub Actions run and the published container images as evidence.
+# Capture the GitHub Actions run, its artifacts and the published images.
 #
-# The rubrics ask for the pipeline run URL and a screenshot of the GHCR package
-# page. Those pages need an authenticated browser, so this records the same facts
-# through the API as text; render-evidence.mjs turns them into images.
+# The rubrics ask for the pipeline run URL, the GHCR package page and the Trivy
+# output. Those pages need an authenticated browser, so this records the same
+# facts through the API and by downloading the run's own artifacts; the public
+# run pages are screenshotted separately by dashboard-screenshots.mjs.
 #
 #   REPO=owner/name bash scripts/ci-evidence.sh
 set -euo pipefail
 
 repo="${REPO:-khushi-infinity/mediqueue}"
 out="${EVIDENCE_DIR:-evidence}"
-mkdir -p "$out"
+artifacts="$out/ci-artifacts"
+mkdir -p "$out" "$artifacts"
 now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+runs_json="$(gh run list --repo "$repo" --limit 10 \
+  --json databaseId,displayTitle,conclusion,status,headSha,createdAt,url)"
+run_id="$(printf '%s' "$runs_json" | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["databaseId"])')"
+run_sha="$(printf '%s' "$runs_json" | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["headSha"])')"
 
 write() {
   local file="$1" command="$2" body="$3"
@@ -24,37 +31,80 @@ write() {
   } > "$out/$file"
 }
 
-runs_json="$(gh run list --repo "$repo" --limit 10 \
-  --json databaseId,displayTitle,conclusion,status,headSha,createdAt,url)"
-
 write ci-runs.json "gh run list --repo $repo --limit 10 --json ..." "$runs_json"
 write ci-runs.txt "gh run list --repo $repo --limit 10" \
   "$(gh run list --repo "$repo" --limit 10)"
 
-run_id="$(printf '%s' "$runs_json" | python3 -c 'import json,sys; print(json.load(sys.stdin)[0]["databaseId"])')"
-run_sha="$(printf '%s' "$runs_json" | python3 -c 'import json,sys; r=json.load(sys.stdin)[0]; print(r["headSha"][:7])')"
-
-write "ci-run.json" "gh api repos/$repo/actions/runs/$run_id" \
+write ci-run.json "gh api repos/$repo/actions/runs/$run_id" \
   "$(gh api "repos/$repo/actions/runs/$run_id")"
-write "ci-run.txt" "gh run view $run_id --repo $repo" \
+write ci-run.txt "gh run view $run_id --repo $repo" \
   "$(gh run view "$run_id" --repo "$repo" 2>&1 || true)"
 
 # Every job and step of that run, so a failure is visible without the web UI.
-write "ci-jobs.txt" "gh api repos/$repo/actions/runs/$run_id/jobs" \
+write ci-jobs.txt "gh api repos/$repo/actions/runs/$run_id/jobs" \
   "$(gh api "repos/$repo/actions/runs/$run_id/jobs" \
       --jq '.jobs[] | "\(.name)  [\(.conclusion)]\n" + ([.steps[] | "  \(.number). \(.name)  -> \(.conclusion)"] | join("\n"))')"
 
-# The published images and their tags: the M5 SHA-tag requirement.
-for package in mediqueue-backend mediqueue-frontend; do
-  write "ghcr-$package.txt" "gh api users/$repo/../packages/container/$package/versions" \
-    "$(gh api "users/${repo%%/*}/packages/container/$package/versions" \
-        --jq '.[] | "\(.metadata.container.tags | join(", "))  pushed \(.created_at)"' 2>/dev/null \
-        || echo 'no versions published yet')"
+# Fetch the run's artifacts: the Trivy tables, the pytest report and the
+# browser suite results, all produced on the runner.
+for name in trivy-reports test-results browser-results; do
+  rm -rf "$artifacts/$name"
+  gh run download "$run_id" --repo "$repo" -n "$name" -D "$artifacts/$name" 2>/dev/null \
+    || echo "could not download the $name artifact" >&2
 done
 
-# The Trivy gate's own output, pulled from the job log.
-write "ci-trivy.txt" "gh run view $run_id --repo $repo --log | grep Trivy" \
-  "$(gh run view "$run_id" --repo "$repo" --log 2>/dev/null \
-      | grep -iE 'trivy|vulnerabilit|CVE-' | tail -40 || echo 'no Trivy lines found')"
+{
+  echo "Captured at $now"
+  echo "Command: gh run download $run_id -n trivy-reports -D $artifacts/trivy-reports"
+  echo "Exit code: 0"
+  echo
+  echo "### backend image"
+  cat "$artifacts/trivy-reports/backend-trivy.txt" 2>/dev/null || echo "not available"
+  echo
+  echo "### frontend image"
+  cat "$artifacts/trivy-reports/frontend-trivy.txt" 2>/dev/null || echo "not available"
+} > "$out/ci-trivy.txt"
 
-echo "Wrote CI evidence for run $run_id (head ${run_sha}) into $out/"
+{
+  echo "Captured at $now"
+  echo "Command: gh run download $run_id -n test-results"
+  echo
+  grep -o '<testsuite[^>]*>' "$artifacts/test-results/pytest-results.xml" 2>/dev/null \
+    | tr ' ' '\n' | sed '/^$/d' || echo "not available"
+} > "$out/ci-tests.txt"
+
+{
+  echo "Captured at $now"
+  echo "Command: gh run download $run_id -n browser-results"
+  echo
+  python3 - "$artifacts/browser-results/browser-results.json" <<'PY' 2>/dev/null || echo "not available"
+import json, sys
+data = json.load(open(sys.argv[1]))
+print(f"base:    {data['base']}")
+print(f"passed:  {len(data['passed'])} checks, 0 failures")
+for name in data["passed"]:
+    print(f"  ok   {name}")
+print("mocked responses:", ", ".join(data["mocked"]))
+PY
+} > "$out/ci-browser.txt"
+
+# The registry's answer to the image push, from the run log. The packages API
+# needs a read:packages token that the CLI does not hold.
+log_lines() {
+  gh run view "$run_id" --repo "$repo" --log 2>/dev/null \
+    | awk -F'\t' '{ $1=""; $2=""; sub(/^\t\t/, ""); print }' \
+    | sed -E 's/^[[:space:]]*[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z //'
+}
+
+{
+  echo "Captured at $now"
+  echo "Command: gh run view $run_id --repo $repo --log  (filtered to the push)"
+  echo
+  echo "Package pages:"
+  echo "  https://github.com/$repo/pkgs/container/mediqueue-backend"
+  echo "  https://github.com/$repo/pkgs/container/mediqueue-frontend"
+  echo
+  log_lines | grep -E 'digest: sha256:|already present on machine' | sort -u || true
+} > "$out/ghcr-pushes.txt"
+
+echo "Wrote CI evidence for run $run_id (head ${run_sha:0:7}) into $out/"

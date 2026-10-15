@@ -25,8 +25,10 @@ found and fixed, and what remains unproven.
 | Grafana | `/api/health`, dashboard search | 11.6.0 healthy, dashboard provisioned |
 | Failure lab | `python3 scripts/troubleshooting-check.py` | Diagnosed, repaired, cleaned up |
 | GitOps | `bash scripts/local-gitops.sh` | Application `Synced` + `Healthy` |
-| Terminal screenshots | `node scripts/render-evidence.mjs` | 12 PNGs rendered from the transcripts |
-| Dashboard screenshots | `node scripts/dashboard-screenshots.mjs` | 7 browser captures of Prometheus, Argo CD and the Ingress |
+| CI pipeline | `git push origin main` | Both jobs green; both Trivy scans clean |
+| CI artifacts | `gh run download 38755163712` | 26 tests, 17 browser checks, 0 findings |
+| Terminal screenshots | `node scripts/render-evidence.mjs` | 20 PNGs rendered from the transcripts |
+| Dashboard screenshots | `node scripts/dashboard-screenshots.mjs` | 11 browser captures of Prometheus, Grafana, Argo CD, GitHub and the Ingress |
 | Slide deck | `.venv/bin/python scripts/build-slides.py` | 17-page PDF written |
 
 ## Defects Found And Fixed During This Review
@@ -84,30 +86,44 @@ found and fixed, and what remains unproven.
     cluster starved the server long enough that the page never hydrated. The
     dashboard capture now takes a `DASHBOARDS` subset so Prometheus and Grafana
     can be shot mid-load and Argo CD afterwards with the load stopped.
+14. **The first pipeline run failed on a doubled image tag.** `ci-k8s.sh` passed
+    a fully tagged reference as the chart's `repository` value while the chart
+    composes `{{ repository }}:{{ tag }}`, so every pod came up with
+    `ghcr.io/.../mediqueue-backend:<sha>:<sha>` and the release sat in
+    `InvalidImageName` until the eight-minute Helm wait expired. The local
+    bootstrap never reproduced it because `values-local.yaml` supplies
+    `repository` and `tag` separately. The deploy now passes the repository
+    without a tag, preloads the postgres image the way the local script does,
+    and renders the chart first to assert the exact image references. The first
+    run also confirmed what did work: `pytest` and both Trivy scans passed
+    before the deploy step was reached.
 
 ## Claims That Are Not Verified Here
 
 Stated plainly, because an unevidenced claim is worse than a missing one:
 
-- **No GitHub Actions run exists yet.** The workflow is written but cannot be
-  proven until the repository is pushed. There are no pipeline, Trivy or GHCR
-  screenshots in `evidence/`.
+- **The pipeline is proven, but only on a hosted runner.** Both jobs of run
+  [`38755163712`](https://github.com/khushi-infinity/mediqueue/actions/runs/38755163712)
+  are green: 26 tests, both Trivy scans, the Kind deploy, 17 browser checks, the
+  GHCR push and the GitOps promotion. What is *not* shown is the gate refusing a
+  build: the images happen to be clean, so `exit-code: '1'` has never fired.
 - **AWS is not deployed.** Terraform is formatted and validated only. No plan,
   apply or destroy output from a real account exists, so no VPC or EKS console
   screenshots are present.
 - **Argo CD is verified locally, not in production.** It reconciled this chart
   from a local mirror of the repository on a Kind cluster and reached
-  `Synced`/`Healthy`. Because the GitHub repository is not pushed yet, the local
-  run used a mirror via `ARGO_REPO_URL`; the committed Application still points
-  at GitHub and has never synced from it.
+  `Synced`/`Healthy`. The committed Application points at GitHub, but the
+  captured sync came from a mirror through `ARGO_REPO_URL`, so no sync from
+  GitHub itself is recorded here.
 - **The autoscaler was observed scaling up and back down, but not under
   production load.** Two replicas became three at 55% CPU and returned to two.
   That is a real observation on a single node, not a capacity claim.
 - **No authentication or authorisation exists.** The API is open. It is safe for
   a loopback classroom demo and nothing else.
-- **The Trivy gate has never been exercised in CI.** It is configured with
-  `exit-code: '1'`; that it *would* fail a build is a design claim, not a
-  captured result.
+- **The Trivy gate would fail a build, in principle.** The gate is configured with
+  `exit-code: '1'` and `severity: HIGH,CRITICAL`, but both images scan clean, so
+  the failure path has never actually fired. What is proven is the scan running
+  in CI and reporting zero findings (`evidence/ci-trivy.txt`).
 - **The demo video does not exist.** M10 requires one, and it must be recorded by
   the author. The slide deck is not a substitute.
 

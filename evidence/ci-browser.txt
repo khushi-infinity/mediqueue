@@ -1,0 +1,23 @@
+Captured at 2026-10-15T15:02:01Z
+Command: gh run download 38755163712 -n browser-results
+
+base:    http://127.0.0.1:3000
+passed:  17 checks, 0 failures
+  ok   desktop render
+  ok   clinic illustration loaded
+  ok   real create
+  ok   edit saved
+  ok   edit persisted
+  ok   delete
+  ok   mobile layout
+  ok   mobile dialog
+  ok   Escape-free dialog dismissal
+  ok   error state, retry and disabled pagination on failure
+  ok   pagination boundary (mocked rows)
+  ok   320/768/1920px layout
+  ok   accessible tablet navigation
+  ok   empty-queue actions
+  ok   required-field validation
+  ok   Escape closes dialog
+  ok   no JavaScript exceptions
+mocked responses: outage response, pagination rows, empty list

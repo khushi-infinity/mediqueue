@@ -10,13 +10,33 @@ Regenerate the command-based captures with:
 python3 scripts/collect-evidence.py            # or --compose-build to rebuild first
 python3 scripts/troubleshooting-check.py       # the failure-simulation transcript
 node scripts/browser-check.mjs                 # application screenshots
+bash scripts/ci-evidence.sh                    # the GitHub Actions run and its artifacts
 GRAFANA_PASSWORD="$(bash scripts/grafana-password.sh)" node scripts/grafana-screenshot.mjs
 node scripts/render-evidence.mjs               # terminal screenshots of the transcripts
 ARGO_PASSWORD="$(bash scripts/argocd-password.sh)" node scripts/dashboard-screenshots.mjs
+GITHUB_RUN_ID="$(gh run list --limit 1 --json databaseId --jq '.[0].databaseId')" \
+  DASHBOARDS=github node scripts/dashboard-screenshots.mjs
 ```
 
 Each `*.txt` file records the timestamp, the exact command and its exit code.
 The matching `*.json` file carries the same result in machine-readable form.
+
+## Continuous Integration
+
+| File | What it shows |
+| --- | --- |
+| `ci-runs.txt` | Every workflow run with its conclusion |
+| `ci-run.txt` | The latest run, both jobs green |
+| `ci-jobs.txt` | Each job and every step of it |
+| `ci-tests.txt` | The pytest report from the runner: 26 tests, 0 failures |
+| `ci-browser.txt` | The browser suite from the runner: 17 checks, 0 failures |
+| `ci-trivy.txt` | Both image scans: 0 vulnerabilities |
+| `ghcr-pushes.txt` | The registry accepting the SHA-tagged images, with digests |
+| `ci-artifacts/` | The run's own artifacts, downloaded unmodified |
+
+The Trivy tables only exist as a workflow artifact, not in the job log, so
+`ci-evidence.sh` downloads `trivy-reports`, `test-results` and `browser-results`
+rather than scraping output.
 
 ## Real Deployment Evidence
 
@@ -59,6 +79,10 @@ Captured in a real browser against the running cluster, not composed by hand.
 | `dashboards/argocd-mediqueue.png` | The application detail view with its resource tree |
 | `dashboards/app-ingress.png` | The application served through the Ingress hostname, no port-forward |
 | `grafana-dashboard.png` | The provisioned Grafana dashboard with live panels |
+| `dashboards/github-repo.png` | The public repository on GitHub |
+| `dashboards/github-actions.png` | The Actions runs for the workflow |
+| `dashboards/github-run.png` | A single run with its jobs and steps |
+| `dashboards/github-packages.png` | The GHCR package page, when it is publicly readable |
 
 The Prometheus graphs and the Grafana panels were captured while a load test was
 running, so they show real traffic. Argo CD is captured separately with the load
@@ -72,6 +96,8 @@ python3 scripts/load.py --url http://mediqueue.localhost:8088 --seconds 200 --wo
 DASHBOARDS=prometheus,app node scripts/dashboard-screenshots.mjs
 GRAFANA_PASSWORD="$(bash scripts/grafana-password.sh)" node scripts/grafana-screenshot.mjs
 DASHBOARDS=argo ARGO_PASSWORD="$(bash scripts/argocd-password.sh)" node scripts/dashboard-screenshots.mjs
+GITHUB_RUN_ID="$(gh run list --limit 1 --json databaseId --jq '.[0].databaseId')" \
+  DASHBOARDS=github node scripts/dashboard-screenshots.mjs
 ```
 
 ## About The Screenshots
@@ -110,6 +136,8 @@ runs against the real API and the real database.
 
 ## What Is Not Here
 
-- No GitHub Actions run, because the repository has not been pushed yet.
+- No GitHub *logs*, because reading them needs a signed-in session. The public
+  run pages are screenshotted in `dashboards/github-*.png`, and the run's own
+  artifacts are downloaded verbatim into `ci-artifacts/`.
 - No AWS console screenshots, because the AWS deployment is deferred.
 - No demo video, which must be recorded by the author.

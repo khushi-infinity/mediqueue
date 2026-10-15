@@ -1,0 +1,5 @@
+Captured at 2026-10-15T15:02:01Z
+Command: gh run list --repo khushi-infinity/mediqueue --limit 10 --json ...
+Exit code: 0
+
+[{"conclusion":"success","createdAt":"2026-10-15T14:51:37Z","databaseId":38755163712,"displayTitle":"fix(ci): stop doubling the image tag in the cluster deploy","headSha":"d9984f13c3ec19acf3acfb3b53c414981a6e4e58","status":"completed","url":"https://github.com/khushi-infinity/mediqueue/actions/runs/38755163712"},{"conclusion":"failure","createdAt":"2026-10-15T14:34:53Z","databaseId":38752669570,"displayTitle":"chore(evidence): recapture after the commit identity rewrite","headSha":"332637b3ac0d3ec69e051b5aacc0e80081651568","status":"completed","url":"https://github.com/khushi-infinity/mediqueue/actions/runs/38752669570"}]

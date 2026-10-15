@@ -35,9 +35,10 @@ const files = [
   'ci-runs.txt',
   'ci-run.txt',
   'ci-jobs.txt',
+  'ci-tests.txt',
+  'ci-browser.txt',
   'ci-trivy.txt',
-  'ghcr-mediqueue-backend.txt',
-  'ghcr-mediqueue-frontend.txt',
+  'ghcr-pushes.txt',
 ];
 
 const escape = text =>

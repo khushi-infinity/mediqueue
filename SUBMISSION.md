@@ -11,10 +11,10 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | --- | --- | --- | --- |
 | M1 | Application — frontend, backend, database | 10 | Complete and verified locally |
 | M2 | Testing — pytest and code quality | 10 | Complete and verified locally |
-| M3 | Git and GitHub | 5 | Local history complete; push pending |
+| M3 | Git and GitHub | 5 | Complete; pushed to GitHub |
 | M4 | Docker — Dockerfile and Compose | 10 | Complete and verified locally |
-| M5 | CI/CD — GitHub Actions | 15 | Workflow complete; a green run needs a push |
-| M6 | DevSecOps — Trivy scan | 5 | Configured as a hard gate; run output needs a push |
+| M5 | CI/CD — GitHub Actions | 15 | Complete; pipeline green on `main` |
+| M6 | DevSecOps — Trivy scan | 5 | Complete; both scans clean in CI |
 | M7 | Terraform — AWS infrastructure as code | 15 | Written and validated; apply deferred |
 | M8 | Kubernetes + Helm | 15 | Complete and verified on a local Kind cluster |
 | M9 | Observability — Prometheus + Grafana | 10 | Complete and verified on a local Kind cluster |
@@ -47,6 +47,7 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | Public repository | <https://github.com/khushi-infinity/mediqueue> |
 | Meaningful commit messages | `git log`, `evidence/commit-history.txt` |
 | Commit history screenshot showing at least 10 commits | `evidence/screenshots/commit-history.png` |
+| Commits attributed to the author | All commits authored as `Khushi Sarawagi <248908730+khushi-infinity@users.noreply.github.com>` |
 | `.gitignore` covers `.env`, `__pycache__`, `node_modules`, `.venv` | `.gitignore` |
 
 ## M4 — Docker
@@ -71,6 +72,10 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | Images pushed to GHCR | `docker push` after the gates pass |
 | SHA image tags, not `latest` | `${{ github.sha }}` and `scripts/promote.py` |
 | Pipeline run | `evidence/ci-run.txt`, `evidence/ci-jobs.txt`, `evidence/ci-runs.txt` |
+| Pipeline run in a browser | `evidence/dashboards/github-run.png`, `evidence/dashboards/github-actions.png` |
+| Pytest report from the run | `evidence/ci-tests.txt`, `evidence/ci-artifacts/test-results/` |
+| Browser checks from the run | `evidence/ci-browser.txt`, `evidence/ci-artifacts/browser-results/` |
+| Published image tags | `evidence/ghcr-pushes.txt`, `evidence/dashboards/github-packages.png` |
 | Published images and tags | `evidence/ghcr-mediqueue-backend.txt`, `evidence/ghcr-mediqueue-frontend.txt` |
 
 ## M6 — DevSecOps
@@ -79,7 +84,8 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 | --- | --- |
 | Trivy scans both images | Two `aquasecurity/trivy-action` steps |
 | Severity gate fires on HIGH or CRITICAL | `severity: HIGH,CRITICAL`, `exit-code: '1'` |
-| Scan output from the pipeline | `evidence/ci-trivy.txt` |
+| Scan output from the pipeline | `evidence/ci-trivy.txt`, `evidence/ci-artifacts/trivy-reports/` |
+| What the scans found in CI | 0 vulnerabilities in both images |
 | Explanation of what it scanned | `SECURITY-NOTES.md` |
 
 ## M7 — Terraform
@@ -133,8 +139,10 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 
 ## Open Items
 
-1. **Push to GitHub.** The CI evidence (pipeline run, Trivy output, GHCR package
-   pages) can only exist after the repository is pushed and the workflow runs.
+1. **The repository is pushed** to <https://github.com/khushi-infinity/mediqueue> and
+   the workflow runs on every push to `main`. `scripts/ci-evidence.sh` records the
+   run, its jobs, the published image tags and the Trivy lines as text evidence,
+   because the GitHub run and package pages need an authenticated browser.
 2. **Record the demo video** and commit it under `demo/`. The grading rubric
    treats a missing video as zero for M10.
 3. **AWS apply and destroy**, with console screenshots, if the evaluation

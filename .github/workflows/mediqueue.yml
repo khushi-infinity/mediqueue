@@ -142,7 +142,7 @@ jobs:
       - name: Promote verified images to GitOps
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
-          python scripts/promote.py
+          python3 scripts/promote.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add helm/mediqueue/values-release.json

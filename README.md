@@ -21,8 +21,9 @@ a Kind cluster with all pods running and a completed migration Job, Prometheus
 scraping every backend replica, the provisioned Grafana dashboard, Argo CD
 reporting the application Synced and Healthy, 17 passing browser checks against
 both Compose and Kubernetes, Helm lint and a 16-object render, and a valid
-Terraform module tree. See [evidence](evidence/README.md) for the raw
-transcripts and browser screenshots of the app and every dashboard.
+Terraform module tree. The GitHub Actions pipeline is green on `main`. See
+[evidence](evidence/README.md) for the raw transcripts and browser screenshots
+of the app, every dashboard and the pipeline.
 
 ## Architecture
 
@@ -176,6 +177,14 @@ Test and scan reports are uploaded as workflow artifacts. There is no
 and application packages; it does not establish that application authorization
 or business logic is secure.
 
+The latest run on `main` is green: [run 38755163712][ci-run] passed both jobs in
+about five minutes — 26 tests, both Trivy scans reporting zero findings in the
+Alpine layer and every Python package, the Kind deploy, 17 browser checks, the
+GHCR push and the GitOps promotion. `evidence/` holds the run's artifacts
+verbatim, the captured transcripts, and browser screenshots of the run pages.
+
+[ci-run]: https://github.com/khushi-infinity/mediqueue/actions/runs/38755163712
+
 Registry names:
 
 ```text
@@ -183,9 +192,10 @@ ghcr.io/khushi-infinity/mediqueue-backend:<full-commit-sha>
 ghcr.io/khushi-infinity/mediqueue-frontend:<full-commit-sha>
 ```
 
-New GHCR packages may be private. Make them public in package settings, or
-configure a Kubernetes image-pull Secret using a token with `read:packages`.
-Never commit that token.
+The published packages are public, so an anonymous pull works. If you fork this
+under an account whose packages default to private, make them public in package
+settings or configure a Kubernetes image-pull Secret using a token with
+`read:packages`. Never commit that token.
 
 ## Local Kubernetes And Helm
 

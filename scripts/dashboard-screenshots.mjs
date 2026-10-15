@@ -5,7 +5,9 @@
 //   ARGO_PASSWORD    required for the Argo CD pages (scripts/argocd-password.sh)
 //   APP_URL          default http://mediqueue.localhost:8088
 //   DASHBOARD_DIR    default evidence/dashboards
-//   DASHBOARDS       comma-separated subset of prometheus,app,argo (default all)
+//   DASHBOARDS       comma-separated subset of prometheus,app,argo,github (default all)
+//   GITHUB_REPO      default khushi-infinity/mediqueue, for the github section
+//   GITHUB_RUN_ID    optional Actions run id to screenshot in detail
 //
 // Run a load test at the same time and the Prometheus graphs and Grafana
 // panels show live traffic instead of a flat line. Capture 'argo' on its own
@@ -29,7 +31,7 @@ const APP = process.env.APP_URL || 'http://mediqueue.localhost:8088';
 const argoUser = process.env.ARGO_USER || 'admin';
 const argoPassword = process.env.ARGO_PASSWORD;
 
-const sections = (process.env.DASHBOARDS || 'prometheus,app,argo')
+const sections = (process.env.DASHBOARDS || 'prometheus,app,argo,github')
   .split(',')
   .map(value => value.trim())
   .filter(Boolean);
@@ -135,6 +137,47 @@ if (enabled('argo')) {
       });
     }
   }
+}
+
+// --- GitHub ---------------------------------------------------------------
+// The repository is public, so the run pages render without a session.
+if (enabled('github')) {
+  const ghRepo = process.env.GITHUB_REPO || 'khushi-infinity/mediqueue';
+  const ghRunId = process.env.GITHUB_RUN_ID;
+
+  await shot('github-repo.png', 'GitHub repository home', `https://github.com/${ghRepo}`, async () => {
+    await text('MediQueue', 60000);
+    await page.waitForTimeout(2500);
+  });
+
+  await shot('github-actions.png', 'GitHub Actions runs', `https://github.com/${ghRepo}/actions`, async () => {
+    await text('MediQueue CI/CD', 60000);
+    await page.waitForTimeout(2500);
+  });
+
+  if (ghRunId) {
+    await shot(
+      'github-run.png',
+      'GitHub Actions run',
+      `https://github.com/${ghRepo}/actions/runs/${ghRunId}`,
+      async () => {
+        await text('build-scan-deploy', 60000);
+        await page.waitForTimeout(3000);
+      },
+    );
+  }
+
+  // Packages are private by default even for a public repository, so this one
+  // is expected to need a session and is allowed to fail.
+  await shot(
+    'github-packages.png',
+    'GHCR packages',
+    `https://github.com/${ghRepo}/pkgs/container/mediqueue-backend`,
+    async () => {
+      await text('mediqueue-backend', 20000);
+      await page.waitForTimeout(2000);
+    },
+  );
 }
 
 await browser.close();

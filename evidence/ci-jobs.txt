@@ -1,0 +1,47 @@
+Captured at 2026-10-15T15:02:01Z
+Command: gh api repos/khushi-infinity/mediqueue/actions/runs/38755163712/jobs
+Exit code: 0
+
+test  [success]
+  1. Set up job  -> success
+  2. Initialize containers  -> success
+  3. Run actions/checkout@v4  -> success
+  4. Run actions/setup-python@v5  -> success
+  5. Test against an isolated PostgreSQL database  -> success
+  6. Run actions/setup-node@v4  -> success
+  7. Build the frontend  -> success
+  8. Run azure/setup-helm@v4.3.0  -> success
+  9. Validate Helm  -> success
+  10. Run hashicorp/setup-terraform@v3  -> success
+  11. Validate Terraform without creating cloud resources  -> success
+  12. Run actions/upload-artifact@v4  -> success
+  21. Post Run actions/setup-node@v4  -> success
+  22. Post Run actions/setup-python@v5  -> success
+  23. Post Run actions/checkout@v4  -> success
+  24. Stop containers  -> success
+  25. Complete job  -> success
+build-scan-deploy  [success]
+  1. Set up job  -> success
+  2. Run actions/checkout@v4  -> success
+  3. Build both images using the source commit  -> success
+  4. Scan backend image  -> success
+  5. Scan frontend image  -> success
+  6. Run actions/upload-artifact@v4  -> success
+  7. Create an ephemeral Kubernetes cluster  -> success
+  8. Run azure/setup-helm@v4.3.0  -> success
+  9. Deploy and verify the Helm release  -> success
+  10. Run actions/setup-node@v4  -> success
+  11. Install browser test dependencies  -> success
+  12. Browser regression checks against the deployed Kubernetes application  -> success
+  13. Run actions/upload-artifact@v4  -> success
+  14. Run docker/login-action@v3  -> success
+  15. Publish verified images  -> success
+  16. Promote verified images to GitOps  -> success
+  17. Collect cluster diagnostics  -> success
+  29. Post Run docker/login-action@v3  -> success
+  30. Post Run actions/setup-node@v4  -> success
+  31. Post Create an ephemeral Kubernetes cluster  -> success
+  32. Post Scan frontend image  -> success
+  33. Post Scan backend image  -> success
+  34. Post Run actions/checkout@v4  -> success
+  35. Complete job  -> success

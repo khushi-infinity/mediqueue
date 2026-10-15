@@ -1,16 +1,28 @@
 {
-  "capturedAt": "2026-10-15T14:33:13.899Z",
+  "capturedAt": "2026-10-15T15:02:50.297Z",
   "results": [
     {
-      "file": "argocd-applications.png",
-      "label": "Argo CD applications",
-      "url": "http://argocd.localhost:8088/applications",
+      "file": "github-repo.png",
+      "label": "GitHub repository home",
+      "url": "https://github.com/khushi-infinity/mediqueue",
       "ok": true
     },
     {
-      "file": "argocd-mediqueue.png",
-      "label": "Argo CD application detail",
-      "url": "http://argocd.localhost:8088/applications",
+      "file": "github-actions.png",
+      "label": "GitHub Actions runs",
+      "url": "https://github.com/khushi-infinity/mediqueue/actions",
+      "ok": true
+    },
+    {
+      "file": "github-run.png",
+      "label": "GitHub Actions run",
+      "url": "https://github.com/khushi-infinity/mediqueue/actions/runs/38755163712",
+      "ok": true
+    },
+    {
+      "file": "github-packages.png",
+      "label": "GHCR packages",
+      "url": "https://github.com/khushi-infinity/mediqueue/pkgs/container/mediqueue-backend",
       "ok": true
     }
   ]
