@@ -139,8 +139,9 @@ kubectl --context kind-mediqueue -n mediqueue top pods
 * <http://localhost:9090/targets> shows the backend job `UP`.
 * <http://localhost:3001> shows the provisioned **MediQueue / Service Health**
   dashboard with live request rate, p95 latency and status-code panels.
-* The HPA targets 70% CPU across 2–4 replicas. Light traffic will not trigger
-  scaling; a configured HPA is not proof of an observed scale-out.
+* The HPA targets 70% CPU across 2–4 replicas. A 40-second run of
+  `scripts/load.py` on a single-node cluster is enough to push it from two
+  replicas to three; when the load stops it returns to two.
 
 ---
 

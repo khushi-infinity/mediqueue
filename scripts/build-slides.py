@@ -104,7 +104,7 @@ SLIDES = [
         "PostgreSQL StatefulSet with a PersistentVolumeClaim",
         "A migration Job runs before the backend init container waits for schema",
         "Ingress routes /api to the backend and / to the frontend",
-        "HPA targets 70% CPU across 2-4 backend replicas",
+        "HPA targets 70% CPU across 2-4 backend replicas; 2 -> 3 observed under load",
     ]),
     ("Observability", [
         "The API exposes /metrics in Prometheus text format",
@@ -117,7 +117,7 @@ SLIDES = [
     ]),
     ("GitOps With Argo CD", [
         "The Application tracks helm/mediqueue on main",
-        "It combines local networking values with the CI-verified image SHA",
+        "Promoted release first, local overlay last, so the cluster uses its own images",
         "CI writes values-release.json only after tests, scans and Kind smoke pass",
         "Automated sync and self-healing are on; automatic pruning is off",
         "Promotion commits use [skip ci] to avoid an image-build loop",
