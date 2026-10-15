@@ -281,6 +281,13 @@ ARGO_REPO_URL=git://172.29.0.1:9418/mediqueue.git bash scripts/local-gitops.sh
 from `docker network inspect kind`. Every other field of the Application,
 including the Helm path and value files, stays exactly as committed.
 
+Once the repository is pushed, point Argo CD at GitHub and stop the mirror:
+
+```bash
+kubectl --context kind-mediqueue -n argocd apply -f gitops/application.yaml
+pkill -f git-daemon
+```
+
 ## AWS Infrastructure
 
 [`terraform/`](terraform/README.md) provisions two public and two private
