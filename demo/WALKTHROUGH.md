@@ -73,14 +73,19 @@ locally and a dedicated PostgreSQL database in CI — never application data.
 git log --oneline
 ```
 
-Every commit is a meaningful, scoped change. Push to GitHub and open the
-repository — the Actions tab runs the pipeline on every push to `main`.
+Every commit is a meaningful, scoped change, and every one is authored as
+`Khushi Sarawagi <248908730+khushi-infinity@users.noreply.github.com>`, so they
+link to the GitHub account. Open
+<https://github.com/khushi-infinity/mediqueue> and show the commit history: at
+least ten commits, Conventional Commit subjects, no credentials anywhere in it.
 
 ---
 
 ## 4. CI/CD pipeline
 
-Push a small change and open the run:
+Open the run that is already green rather than pushing a new commit:
+<https://github.com/khushi-infinity/mediqueue/actions/runs/38755163712>. Both
+jobs passed in five minutes.
 
 1. **test** — ruff, Alembic, pytest against PostgreSQL, frontend production
    build, `helm lint`, `terraform validate`.
@@ -89,7 +94,18 @@ Push a small change and open the run:
    the chart, run a smoke test, run the Playwright suite through a port-forward,
    publish to GHCR and commit the verified SHA into `values-release.json`.
 
-Show the GHCR packages page with two images whose tags are commit SHAs.
+Download the run's artifacts and show them, or open the captures already in the
+repository:
+
+- `evidence/ci-trivy.txt` — 0 vulnerabilities in the Alpine layer and every
+  Python package, in both images.
+- `evidence/ci-tests.txt` — 26 tests, 0 failures, from the runner.
+- `evidence/ci-browser.txt` — 17 browser checks, 0 failures, from the runner.
+- `evidence/dashboards/github-run.png` and `github-packages.png` — the run page
+  and the GHCR package page, with the image tagged by commit SHA.
+
+The packages are public, so anyone can pull
+`ghcr.io/khushi-infinity/mediqueue-backend:<commit-sha>` without credentials.
 
 ---
 
