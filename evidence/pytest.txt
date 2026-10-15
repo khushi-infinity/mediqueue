@@ -1,4 +1,4 @@
-Captured at 2026-10-15T13:49:03.451074+00:00
+Captured at 2026-10-15T14:32:55.533866+00:00
 Command: /Users/khushisarawagi/Desktop/devopscap/mediqueue/.venv/bin/python -m pytest -v
 Exit code: 0
 

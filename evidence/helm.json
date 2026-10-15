@@ -1,6 +1,6 @@
 {
   "name": "helm",
-  "capturedAt": "2026-10-15T13:49:04.695380+00:00",
+  "capturedAt": "2026-10-15T14:32:56.783005+00:00",
   "command": [
     "helm",
     "--kube-context",

@@ -1,27 +1,27 @@
-Captured at 2026-10-15T13:49:04.539077+00:00
+Captured at 2026-10-15T14:32:56.566782+00:00
 Command: kubectl --context kind-mediqueue -n mediqueue get pods,svc,ingress,hpa
 Exit code: 0
 
 NAME                             READY   STATUS    RESTARTS      AGE
-pod/backend-dfcd54b6d-f8svx      1/1     Running   1 (44m ago)   84m
-pod/backend-dfcd54b6d-fdcmt      1/1     Running   1 (44m ago)   76m
-pod/frontend-784fb8c85-c5dxh     1/1     Running   3 (44m ago)   84m
-pod/frontend-784fb8c85-s4p48     1/1     Running   3 (44m ago)   84m
-pod/grafana-69b54f78d7-nfzvk     1/1     Running   1 (44m ago)   84m
-pod/postgres-0                   1/1     Running   1 (44m ago)   84m
-pod/prometheus-dfbc7cbf4-7d7zx   1/1     Running   1 (44m ago)   84m
+pod/backend-dfcd54b6d-f8svx      1/1     Running   1 (88m ago)   128m
+pod/backend-dfcd54b6d-fdcmt      1/1     Running   1 (88m ago)   120m
+pod/frontend-784fb8c85-c5dxh     1/1     Running   3 (88m ago)   128m
+pod/frontend-784fb8c85-s4p48     1/1     Running   3 (88m ago)   128m
+pod/grafana-69b54f78d7-nfzvk     1/1     Running   1 (88m ago)   128m
+pod/postgres-0                   1/1     Running   1 (88m ago)   128m
+pod/prometheus-dfbc7cbf4-7d7zx   1/1     Running   1 (88m ago)   128m
 
 NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/backend           ClusterIP   10.96.205.163   <none>        8000/TCP         84m
-service/backend-metrics   ClusterIP   None            <none>        8000/TCP         84m
-service/frontend          ClusterIP   10.96.15.85     <none>        8080/TCP         84m
-service/grafana           NodePort    10.96.245.109   <none>        3000:30300/TCP   84m
-service/postgres          ClusterIP   None            <none>        5432/TCP         84m
-service/prometheus        NodePort    10.96.235.195   <none>        9090:30900/TCP   84m
+service/backend           ClusterIP   10.96.205.163   <none>        8000/TCP         128m
+service/backend-metrics   ClusterIP   None            <none>        8000/TCP         128m
+service/frontend          ClusterIP   10.96.15.85     <none>        8080/TCP         128m
+service/grafana           NodePort    10.96.245.109   <none>        3000:30300/TCP   128m
+service/postgres          ClusterIP   None            <none>        5432/TCP         128m
+service/prometheus        NodePort    10.96.235.195   <none>        9090:30900/TCP   128m
 
 NAME                                  CLASS     HOSTS                 ADDRESS     PORTS   AGE
-ingress.networking.k8s.io/mediqueue   traefik   mediqueue.localhost   127.0.0.1   80      84m
+ingress.networking.k8s.io/mediqueue   traefik   mediqueue.localhost   127.0.0.1   80      128m
 
 NAME                                          REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/backend   Deployment/backend   cpu: 5%/70%   2         4         2          84m
+horizontalpodautoscaler.autoscaling/backend   Deployment/backend   cpu: 5%/70%   2         4         2          128m
 
