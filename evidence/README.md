@@ -11,6 +11,7 @@ python3 scripts/collect-evidence.py            # or --compose-build to rebuild f
 python3 scripts/troubleshooting-check.py       # the failure-simulation transcript
 node scripts/browser-check.mjs                 # application screenshots
 GRAFANA_PASSWORD="$(bash scripts/grafana-password.sh)" node scripts/grafana-screenshot.mjs
+node scripts/render-evidence.mjs               # terminal screenshots of the transcripts
 ```
 
 Each `*.txt` file records the timestamp, the exact command and its exit code.
@@ -40,6 +41,20 @@ The matching `*.json` file carries the same result in machine-readable form.
 | `grafana-dashboard.png` | The provisioned `MediQueue / Service Health` dashboard with live data |
 | `browser-results.json` | The list of checks that passed |
 | `k8s/` | The same browser suite and screenshots, captured against the Kubernetes deployment |
+| `screenshots/` | Terminal-style renderings of every `.txt` transcript above |
+
+## About The Screenshots
+
+Several rubrics ask for screenshots of command output. `screenshots/*.png` are
+plain renderings of the `.txt` transcripts next to them: the script reads the
+captured file and draws its text into a terminal-shaped frame, with the recorded
+command in the title bar. Nothing is retyped, and the `.txt` file remains the
+source of truth. Transcripts longer than 45 lines are cut with a marker saying
+how many lines continue in the text file.
+
+`screenshots/kubernetes.png`, `screenshots/helm.png` and `screenshots/compose.png`
+are the images M4 and M8 ask for, and `screenshots/commit-history.png` is the
+commit history M3 asks for.
 
 ## Observed Scale-Out
 
