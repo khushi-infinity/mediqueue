@@ -237,11 +237,15 @@ external alert notification destination is configured in the local demonstration
 ## Argo CD And GitOps
 
 [`gitops/application.yaml`](gitops/application.yaml) tracks this repository's
-Helm chart on `main`. It combines local networking values with the verified GHCR
-image tags in `values-release.json`. CI updates that file only after tests, scans
-and the ephemeral Kubernetes smoke deployment pass. Automated sync and
-self-healing are enabled; automatic pruning is disabled. Promotion commits use
-`[skip ci]` to avoid an image-build loop.
+Helm chart on `main`. It passes two value files, and later files win:
+`values-release.json` is the CI-promoted release, and `values-local.yaml` is
+applied last so a local cluster uses the images loaded with
+`kind load docker-image` rather than registry digests. CI updates
+`values-release.json` only after tests, scans and the ephemeral Kubernetes smoke
+deployment pass. On AWS, swap the last file for `values-aws.yaml` so the promoted
+GHCR images are pulled normally. Automated sync and self-healing are enabled;
+automatic pruning is disabled. Promotion commits use `[skip ci]` to avoid an
+image-build loop.
 
 After the local Helm bootstrap, transfer deployment ownership to Argo CD:
 

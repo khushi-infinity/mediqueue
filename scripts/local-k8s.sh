@@ -36,7 +36,8 @@ kubectl --context "$context" -n mediqueue create secret generic mediqueue-grafan
 
 helm repo add traefik https://traefik.github.io/charts >/dev/null 2>&1 || true
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/ >/dev/null 2>&1 || true
-helm repo update >/dev/null
+# Update only these two repositories; an unrelated unreachable index must not abort the bootstrap.
+helm repo update traefik metrics-server >/dev/null
 helm --kube-context "$context" upgrade --install traefik traefik/traefik \
   -n kube-system -f k8s/traefik-values.yaml --wait
 helm --kube-context "$context" upgrade --install metrics-server metrics-server/metrics-server \

@@ -1,0 +1,78 @@
+Troubleshooting transcript captured at 2026-10-15T13:06:16.769720+00:00
+
+$ kubectl apply -f troubleshooting/broken-image.yaml
+deployment.apps/broken-image-demo created
+
+$ kubectl apply -f troubleshooting/broken-service.yaml
+service/broken-backend-demo created
+
+$ kubectl wait -n mediqueue --for=condition=Available deployment/broken-image-demo --timeout=20s
+error: timed out waiting for the condition on deployments/broken-image-demo
+
+$ kubectl -n mediqueue get pods -l app=broken-image-demo
+NAME                                READY   STATUS             RESTARTS   AGE
+broken-image-demo-b79dc4794-r25qg   0/1     ImagePullBackOff   0          20s
+
+$ kubectl -n mediqueue describe deployment broken-image-demo
+Name:                   broken-image-demo
+Namespace:              mediqueue
+CreationTimestamp:      Thu, 15 Oct 2026 18:35:55 +0530
+Labels:                 app=broken-image-demo
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=broken-image-demo
+Replicas:               1 desired | 1 updated | 1 total | 0 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=broken-image-demo
+  Containers:
+   demo:
+    Image:      nginx:this-tag-does-not-exist
+    Port:       <none>
+    Host Port:  <none>
+    Limits:
+      cpu:     100m
+      memory:  64Mi
+    Requests:
+      cpu:         10m
+      memory:      16Mi
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      False   MinimumReplicasUnavailable
+  Progressing    True    ReplicaSetUpdated
+OldReplicaSets:  <none>
+NewReplicaSet:   broken-image-demo-b79dc4794 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  20s   deployment-controller  Scaled up replica set broken-image-demo-b79dc4794 from 0 to 1
+
+$ kubectl -n mediqueue get endpointslices -l kubernetes.io/service-name=broken-backend-demo
+NAME                        ADDRESSTYPE   PORTS     ENDPOINTS   AGE
+broken-backend-demo-hl4dl   IPv4          <unset>   <unset>     20s
+
+$ kubectl -n mediqueue set image deployment/broken-image-demo demo=nginx:stable-alpine
+deployment.apps/broken-image-demo image updated
+
+$ kubectl wait -n mediqueue --for=condition=Available deployment/broken-image-demo --timeout=180s
+deployment.apps/broken-image-demo condition met
+
+$ kubectl -n mediqueue set selector service/broken-backend-demo app=backend
+service/broken-backend-demo selector updated
+
+$ kubectl -n mediqueue get endpointslices -l kubernetes.io/service-name=broken-backend-demo
+NAME                        ADDRESSTYPE   PORTS   ENDPOINTS                          AGE
+broken-backend-demo-hl4dl   IPv4          8000    10.244.0.6,10.244.0.5,10.244.0.4   21s
+
+$ kubectl -n mediqueue delete deployment broken-image-demo --ignore-not-found
+deployment.apps "broken-image-demo" deleted from mediqueue namespace
+
+$ kubectl -n mediqueue delete service broken-backend-demo --ignore-not-found
+service "broken-backend-demo" deleted from mediqueue namespace

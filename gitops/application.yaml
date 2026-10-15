@@ -11,7 +11,11 @@ spec:
     path: helm/mediqueue
     helm:
       releaseName: mediqueue
-      valueFiles: [values-local.yaml, values-release.json]
+      # Later files win. The CI-promoted release is the base, and the local
+      # overlay is applied last so a local cluster uses the images that were
+      # loaded with `kind load docker-image` instead of registry digests.
+      # On AWS, replace values-local.yaml with values-aws.yaml.
+      valueFiles: [values-release.json, values-local.yaml]
   destination:
     server: https://kubernetes.default.svc
     namespace: mediqueue

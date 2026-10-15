@@ -10,7 +10,9 @@ if ! kubectl --context "$context" -n mediqueue get svc frontend >/dev/null 2>&1;
 fi
 
 helm repo add argo https://argoproj.github.io/argo-helm >/dev/null 2>&1 || true
-helm repo update >/dev/null
+# Update only the repository this script uses: an unrelated unreachable index
+# must not be able to abort the install.
+helm repo update argo >/dev/null
 helm --kube-context "$context" upgrade --install argocd argo/argo-cd \
   -n argocd --create-namespace -f gitops/values-argocd.yaml --version 7.7.11 --wait --timeout 10m
 

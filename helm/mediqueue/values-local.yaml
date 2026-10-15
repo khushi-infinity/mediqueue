@@ -1,6 +1,11 @@
+# Local Kind overlay. Applied last so it is authoritative on a local cluster:
+# images are the ones loaded with `kind load docker-image`, never the registry
+# digests that CI promotes into values-release.json.
 backend:
   repository: mediqueue-backend
+  tag: local
 frontend:
   repository: mediqueue-frontend
+  tag: local
 monitoring:
   nodePorts: true
