@@ -1,0 +1,28 @@
+{
+  "capturedAt": "2026-10-15T12:22:33.041Z",
+  "base": "http://127.0.0.1:3000",
+  "passed": [
+    "desktop render",
+    "clinic illustration loaded",
+    "real create",
+    "edit saved",
+    "edit persisted",
+    "delete",
+    "mobile layout",
+    "mobile dialog",
+    "Escape-free dialog dismissal",
+    "error state, retry and disabled pagination on failure",
+    "pagination boundary (mocked rows)",
+    "320/768/1920px layout",
+    "accessible tablet navigation",
+    "empty-queue actions",
+    "required-field validation",
+    "Escape closes dialog",
+    "no JavaScript exceptions"
+  ],
+  "mocked": [
+    "outage response",
+    "pagination rows",
+    "empty list"
+  ]
+}

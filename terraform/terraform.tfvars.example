@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars and adjust. Never commit terraform.tfvars or any AWS credentials.
+region       = "ap-south-1"
+cluster_name = "mediqueue-cluster"
+
+# Replace with your own public IP so the EKS API is not world-reachable.
+api_allowed_cidrs = ["203.0.113.10/32"]
+
+node_instance_types = ["t3.medium"]

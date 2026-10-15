@@ -1,0 +1,11 @@
+{
+  "backend": {
+    "repository": "ghcr.io/khushi-infinity/mediqueue-backend",
+    "tag": "local"
+  },
+  "frontend": {
+    "repository": "ghcr.io/khushi-infinity/mediqueue-frontend",
+    "tag": "local"
+  },
+  "imagePullSecrets": []
+}

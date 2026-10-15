@@ -1,0 +1,6 @@
+backend:
+  repository: mediqueue-backend
+frontend:
+  repository: mediqueue-frontend
+monitoring:
+  nodePorts: true

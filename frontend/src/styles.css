@@ -102,7 +102,7 @@ h3 { font-size: 12px; margin: 0 0 14px; display: flex; align-items: center; gap:
 .search input { padding: 0; border: 0; min-width: 0; width: 100%; background: transparent; font-size: 11px; outline-offset: 6px; }
 
 /* Table */
-.table-wrap { overflow: auto; min-height: 380px; }
+.table-wrap { position: relative; overflow: auto; min-height: 380px; }
 table { border-collapse: collapse; width: 100%; text-align: left; white-space: nowrap; }
 th { font-size: 10px; color: #83979d; font-weight: 600; background: #ebeef0; padding: 12px 10px; letter-spacing: .04em; }
 td { padding: 16px 10px; border-bottom: 1px solid #e6edef; font-size: 11px; text-align: left; }
@@ -218,9 +218,10 @@ textarea { resize: vertical; }
   .topbar { height: 46px; font-size: 10px; }
   .workspace-dot { font-size: 9px; }
   .page-content { padding: 22px 15px; }
-  .page-title { align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+  .page-title { align-items: flex-start; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .page-title > div { min-width: 0; }
   .page-title h1 { font-size: 24px; }
-  .page-title .muted { font-size: 11px; max-width: 190px; }
+  .page-title .muted { font-size: 11px; max-width: 190px; overflow-wrap: anywhere; }
   .page-title > button { padding: 9px 11px; font-size: 11px; white-space: nowrap; margin-top: 16px; }
   .overview { grid-template-columns: 1fr 1fr; row-gap: 20px; padding: 18px 0; }
   .metric { padding: 0 14px !important; }
