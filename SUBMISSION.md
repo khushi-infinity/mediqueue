@@ -141,10 +141,13 @@ the raw command output or browser capture exists in [`evidence/`](evidence/READM
 
 1. **The repository is pushed** to <https://github.com/khushi-infinity/mediqueue> and
    the workflow runs on every push to `main`. `scripts/ci-evidence.sh` records the
-   run, its jobs, the published image tags and the Trivy lines as text evidence,
-   because the GitHub run and package pages need an authenticated browser.
+   run, its jobs and the run's own artifacts as text evidence, and the public run
+   and package pages are captured in a browser under `evidence/dashboards/`. Job
+   logs are the only part that needs a signed-in session.
 2. **Record the demo video** and commit it under `demo/`. The grading rubric
-   treats a missing video as zero for M10.
+   treats a missing video as zero for M10. `demo/WALKTHROUGH.md` walks every
+   layer in order and starts with the four commands that bring the whole stack
+   up, so the recording can follow it directly.
 3. **AWS apply and destroy**, with console screenshots, if the evaluation
    requires real cloud proof. The code is ready and validated.
 4. **HPA scale-out** was observed locally (2 → 3 replicas at 55% CPU, back to 2
