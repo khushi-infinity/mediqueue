@@ -29,7 +29,7 @@ found and fixed, and what remains unproven.
 | CI artifacts | `gh run download 38755163712` | 26 tests, 17 browser checks, 0 findings |
 | Terminal screenshots | `node scripts/render-evidence.mjs` | 20 PNGs rendered from the transcripts |
 | Dashboard screenshots | `node scripts/dashboard-screenshots.mjs` | 11 browser captures of Prometheus, Grafana, Argo CD, GitHub and the Ingress |
-| Slide deck | `.venv/bin/python scripts/build-slides.py` | 17-page PDF written |
+| Slide deck | `.venv/bin/python scripts/build-slides.py` | 19-page diagram-led PDF, screenshots embedded |
 
 ## Defects Found And Fixed During This Review
 
